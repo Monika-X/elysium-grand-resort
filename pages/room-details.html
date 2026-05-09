@@ -1,0 +1,713 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <meta name="description" content="View details of the luxurious Presidential Suite at Elysium Grand Resort. Experience the pinnacle of comfort.">
+  <title>Presidential Suite Details | Elysium Grand Resort</title>
+  <link rel="stylesheet" href="../css/style.css">
+  <link rel="stylesheet" href="../css/animations.css">
+  <link rel="stylesheet" href="../css/responsive.css">
+  <style>
+    /* Specific Room Details Styles */
+    
+    /* Interactive Image Slider */
+    .room-slider-wrapper {
+      position: relative;
+      width: 100%;
+      height: 60vh;
+      min-height: 500px;
+      margin-bottom: 2rem;
+      border-radius: var(--radius-sm);
+      overflow: hidden;
+      box-shadow: var(--shadow-lg);
+    }
+    
+    .room-slide {
+      position: absolute;
+      inset: 0;
+      opacity: 0;
+      transition: opacity 0.8s ease-in-out, transform 8s linear;
+      transform: scale(1);
+    }
+    
+    .room-slide.active {
+      opacity: 1;
+      transform: scale(1.05);
+      z-index: 1;
+    }
+    
+    .room-slide img {
+      width: 100%;
+      height: 100%;
+      object-fit: cover;
+    }
+    
+    .slider-arrow {
+      position: absolute;
+      top: 50%;
+      transform: translateY(-50%);
+      width: 50px;
+      height: 50px;
+      background: rgba(11,29,38,0.5);
+      backdrop-filter: blur(4px);
+      color: var(--white);
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      cursor: pointer;
+      z-index: 10;
+      border-radius: 50%;
+      border: 1px solid rgba(255,255,255,0.2);
+      transition: all var(--transition-fast);
+      font-size: 1.5rem;
+    }
+    
+    .slider-arrow:hover {
+      background: var(--gold);
+      border-color: var(--gold);
+    }
+    
+    .slider-prev { left: 20px; }
+    .slider-next { right: 20px; }
+    
+    .slider-thumbnails {
+      display: flex;
+      gap: 1rem;
+      margin-bottom: 4rem;
+      overflow-x: auto;
+      padding-bottom: 1rem;
+    }
+    
+    .slider-thumb {
+      flex: 0 0 150px;
+      height: 100px;
+      border-radius: var(--radius-sm);
+      overflow: hidden;
+      cursor: pointer;
+      opacity: 0.6;
+      transition: all var(--transition-fast);
+      border: 2px solid transparent;
+    }
+    
+    .slider-thumb img {
+      width: 100%;
+      height: 100%;
+      object-fit: cover;
+    }
+    
+    .slider-thumb:hover, .slider-thumb.active {
+      opacity: 1;
+      border-color: var(--gold);
+    }
+
+    /* Amenities List */
+    .detail-amenities {
+      display: grid;
+      grid-template-columns: repeat(2, 1fr);
+      gap: 1rem;
+      margin-top: 2rem;
+    }
+    
+    .detail-amenity-item {
+      display: flex;
+      align-items: center;
+      gap: 1rem;
+      padding: 1rem;
+      background: var(--white);
+      border: 1px solid rgba(0,0,0,0.05);
+      border-radius: var(--radius-sm);
+      transition: all var(--transition-fast);
+    }
+    
+    .detail-amenity-item:hover {
+      border-color: var(--gold-light);
+      box-shadow: var(--shadow-sm);
+      transform: translateX(5px);
+    }
+    
+    .detail-amenity-icon {
+      color: var(--gold);
+      font-size: 1.5rem;
+    }
+
+    /* Specifications */
+    .specs-grid {
+      display: grid;
+      grid-template-columns: repeat(3, 1fr);
+      gap: 1rem;
+      margin-bottom: 3rem;
+      background: var(--navy);
+      color: var(--white);
+      padding: 2rem;
+      border-radius: var(--radius-sm);
+    }
+    
+    .spec-item {
+      text-align: center;
+    }
+    
+    .spec-value {
+      font-family: var(--font-hero);
+      font-size: 2rem;
+      color: var(--gold);
+      margin-bottom: 0.25rem;
+    }
+    
+    .spec-label {
+      font-size: 0.75rem;
+      text-transform: uppercase;
+      letter-spacing: 2px;
+      color: rgba(255,255,255,0.7);
+    }
+
+    /* Sticky Sidebar */
+    .room-detail-sidebar {
+      position: sticky;
+      top: 100px;
+    }
+    
+    .booking-widget {
+      background: var(--white);
+      padding: 3rem;
+      border-radius: var(--radius-sm);
+      box-shadow: var(--shadow-premium);
+      border-top: 4px solid var(--gold);
+    }
+
+    /* Reviews */
+    .review-card {
+      padding: 2rem;
+      border-bottom: 1px solid rgba(0,0,0,0.1);
+    }
+    
+    .review-card:last-child {
+      border-bottom: none;
+    }
+    
+    @media (max-width: 992px) {
+      .detail-amenities      { grid-template-columns: repeat(2, 1fr); }
+      .specs-grid            { grid-template-columns: repeat(3, 1fr); }
+      .room-detail-sidebar   { position: static !important; }
+      .booking-widget        { padding: 2rem; }
+      .room-slider-wrapper   { height: 45vh; min-height: 320px; }
+    }
+    @media (max-width: 768px) {
+      .detail-amenities      { grid-template-columns: 1fr; }
+      .specs-grid            { grid-template-columns: repeat(3, 1fr); padding: 1.5rem; }
+      .spec-value            { font-size: 1.5rem; }
+      /* Header title + price — stack vertically */
+      [style*="justify-content: space-between"][style*="align-items: flex-end"] {
+        flex-direction: column !important;
+        align-items: flex-start !important;
+      }
+      [style*="text-align: right"] {
+        text-align: left !important;
+      }
+      /* Title size */
+      h1[style*="font-size: 3.5rem"] {
+        font-size: clamp(1.75rem, 6vw, 2.75rem) !important;
+      }
+      .room-slider-wrapper   { height: 38vh; min-height: 260px; }
+      .slider-thumb          { flex: 0 0 100px; height: 70px; }
+      .booking-widget        { padding: 1.75rem; }
+    }
+    @media (max-width: 576px) {
+      .detail-amenities      { grid-template-columns: 1fr; }
+      .specs-grid            { grid-template-columns: repeat(3, 1fr); padding: 1.25rem 0.75rem; gap: 0.5rem; }
+      .spec-value            { font-size: 1.2rem; }
+      .spec-label            { font-size: 0.6rem; }
+      .room-slider-wrapper   { height: 35vh; min-height: 220px; }
+      .slider-arrow          { width: 38px; height: 38px; font-size: 1.2rem; }
+      .slider-prev           { left: 10px; }
+      .slider-next           { right: 10px; }
+      .booking-widget        { padding: 1.25rem; }
+      .review-card           { padding: 1.25rem; }
+      /* Slider thumbnails — smaller on mobile */
+      .slider-thumbnails     { gap: 0.5rem; }
+      .slider-thumb          { flex: 0 0 72px; height: 52px; }
+    }
+  </style>
+</head>
+<body>
+  <!-- Preloader -->
+  <div class="preloader" id="preloader">
+    <div class="preloader-inner">
+      <div class="logo">Elysium Grand</div>
+      <div class="preloader-bar"></div>
+    </div>
+  </div>
+
+  <!-- Navbar Placeholder -->
+  <!-- ===== NAVBAR COMPONENT ===== -->
+<nav class="navbar" id="main-navbar">
+  <div class="container">
+    <a href="../index.html" class="logo">Elysium <span>Grand</span></a>
+
+    <div class="nav-overlay" id="nav-overlay"></div>
+
+    <ul class="nav-menu" id="nav-menu">
+      <li><a href="../index.html" class="link-underline">Home</a></li>
+      <li><a href="about.html" class="link-underline">About</a></li>
+      <li><a href="rooms.html" class="active">Rooms</a></li>
+      <li><a href="booking.html" class="link-underline">Booking</a></li>
+      <li><a href="gallery.html" class="link-underline">Gallery</a></li>
+      <li><a href="contact.html" class="link-underline">Contact</a></li>
+    </ul>
+
+    <button class="hamburger" id="hamburger" aria-label="Toggle menu">
+      <span></span>
+      <span></span>
+      <span></span>
+    </button>
+  </div>
+</nav>
+
+
+  <!-- Page Hero (Mini) -->
+  <section class="page-hero" style="padding: 150px 0 60px;">
+    <div class="container">
+      <div class="breadcrumb animate-fade-up">
+        <a href="../index.html">Home</a><span>/</span><a href="rooms.html">Rooms</a><span>/</span><span>Presidential Suite</span>
+      </div>
+    </div>
+  </section>
+
+  <!-- Room Details Layout -->
+  <section class="section" style="padding-top: 0;">
+    <div class="container">
+      
+      <div class="grid room-detail-layout">
+        
+        <!-- Main Content Column -->
+        <div class="room-main-content">
+          
+          <!-- Header -->
+          <div class="scroll-animate" style="margin-bottom: 2rem;">
+            <div style="display: flex; justify-content: space-between; align-items: flex-end; flex-wrap: wrap; gap: 1rem;">
+              <div>
+                <span class="section-label">Exclusive Collection</span>
+                <h1 style="font-family: var(--font-hero); font-size: 3.5rem; margin-bottom: 0.5rem; color: var(--navy);">Presidential Suite</h1>
+                <div style="color: var(--gold); letter-spacing: 2px;">★★★★★ <span style="color: var(--text-muted); font-size: 0.9rem; letter-spacing: 0;">(48 Reviews)</span></div>
+              </div>
+              <div style="text-align: right;">
+                <div style="font-size: 0.85rem; text-transform: uppercase; letter-spacing: 1px; color: var(--text-muted);">From</div>
+                <div style="font-family: var(--font-hero); font-size: 2.5rem; color: var(--navy); line-height: 1;">₹599<span style="font-size: 1rem; font-family: var(--font-body); color: var(--text-muted);">/night</span></div>
+              </div>
+            </div>
+          </div>
+
+          <!-- Large Image Gallery Slider -->
+          <div class="scroll-animate delay-2">
+            <div class="room-slider-wrapper">
+              <div class="slider-arrow slider-prev" id="prevSlide">‹</div>
+              <div class="slider-arrow slider-next" id="nextSlide">›</div>
+              
+              <div class="room-slide active" data-index="0">
+                <img src="../assets/rooms/room-2.jpg" alt="Presidential Suite Living Area">
+              </div>
+              <div class="room-slide" data-index="1">
+                <img src="../assets/rooms/room-1.jpg" alt="Presidential Suite Bedroom">
+              </div>
+              <div class="room-slide" data-index="2">
+                <img src="../assets/rooms/room-3.jpg" alt="Presidential Suite View">
+              </div>
+            </div>
+            
+            <div class="slider-thumbnails">
+              <div class="slider-thumb active" data-index="0"><img src="../assets/rooms/room-2.jpg" alt="Thumb 1"></div>
+              <div class="slider-thumb" data-index="1"><img src="../assets/rooms/room-1.jpg" alt="Thumb 2"></div>
+              <div class="slider-thumb" data-index="2"><img src="../assets/rooms/room-3.jpg" alt="Thumb 3"></div>
+            </div>
+          </div>
+
+          <!-- Room Specifications -->
+          <div class="specs-grid scroll-animate">
+            <div class="spec-item">
+              <div class="spec-value">120</div>
+              <div class="spec-label">Square Meters</div>
+            </div>
+            <div class="spec-item">
+              <div class="spec-value">04</div>
+              <div class="spec-label">Max Guests</div>
+            </div>
+            <div class="spec-item">
+              <div class="spec-value">02</div>
+              <div class="spec-label">Bedrooms</div>
+            </div>
+          </div>
+
+          <!-- Room Overview -->
+          <div class="scroll-animate" style="margin-bottom: 4rem;">
+            <h3 style="font-family: var(--font-heading); font-size: 2rem; margin-bottom: 1rem;">Room Overview</h3>
+            <p style="color: var(--text-muted); line-height: 1.8; margin-bottom: 1rem;">The pinnacle of luxury at Elysium Grand Resort. The Presidential Suite offers an expansive, sun-drenched sanctuary featuring panoramic, uninterrupted views of the azure ocean. Designed with bespoke furnishings and fine art, the suite encapsulates an aura of modern elegance and timeless sophistication.</p>
+            <p style="color: var(--text-muted); line-height: 1.8;">Guests of the Presidential Suite receive exclusive access to 24/7 dedicated butler service, private dining arrangements, and complimentary access to the premium holistic spa facilities. Experience absolute privacy and supreme comfort.</p>
+          </div>
+
+          <!-- Amenities List -->
+          <div class="scroll-animate" style="margin-bottom: 4rem;">
+            <h3 style="font-family: var(--font-heading); font-size: 2rem; margin-bottom: 1rem;">Premium Amenities</h3>
+            <div class="detail-amenities">
+              <div class="detail-amenity-item">
+                <span class="detail-amenity-icon">
+                  <svg width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M2 20h20"/><path d="M2 14v6"/><path d="M22 14v6"/><path d="M5 18v-4a2 2 0 0 1 2-2h10a2 2 0 0 1 2 2v4"/><path d="M2 8h20"/><path d="M5 8v6"/><path d="M19 8v6"/><path d="M10 8V4a2 2 0 0 1 2-2h0a2 2 0 0 1 2 2v4"/></svg>
+                </span>
+                <span>Premium King Size Bed</span>
+              </div>
+              <div class="detail-amenity-item">
+                <span class="detail-amenity-icon">
+                  <svg width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M2 6c.6.5 1.2 1 2.5 1C5.8 7 6.5 6 8 6c1.5 0 2.2 1 3.5 1s2.2-1 3.5-1 2.2 1 3.5 1 2.2 1 3.5 1 2.9-.5 3.5-1"/><path d="M2 12c.6.5 1.2 1 2.5 1 1.3 0 2-1 3.5-1 1.5 0 2.2 1 3.5 1s2.2-1 3.5-1 2.2 1 3.5 1 2.9-.5 3.5-1"/><path d="M2 18c.6.5 1.2 1 2.5 1 1.3 0 2-1 3.5-1 1.5 0 2.2 1 3.5 1s2.2-1 3.5-1 2.2 1 3.5 1 2.9-.5 3.5-1"/></svg>
+                </span>
+                <span>Panoramic Ocean Views</span>
+              </div>
+              <div class="detail-amenity-item">
+                <span class="detail-amenity-icon">
+                  <svg width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M19 21v-2a4 4 0 0 0-4-4H9a4 4 0 0 0-4 4v2"/><circle cx="12" cy="7" r="4"/></svg>
+                </span>
+                <span>24/7 Dedicated Butler</span>
+              </div>
+              <div class="detail-amenity-item">
+                <span class="detail-amenity-icon">
+                  <svg width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M9 6 6.5 3.5a1.5 1.5 0 0 0-1-1C4.6 2.4 4 3 4 3.8V17a2 2 0 0 0 2 2h12a2 2 0 0 0 2-2V8"/><path d="M10 11h.01"/><path d="M14 11h.01"/><path d="M18 11h.01"/><path d="M6 11h.01"/></svg>
+                </span>
+                <span>Private Jacuzzi</span>
+              </div>
+              <div class="detail-amenity-item">
+                <span class="detail-amenity-icon">
+                  <svg width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M11 20a4 4 0 0 1-8 0c0-4.8 8-11 8-11s8 6.2 8 11a4 4 0 0 1-8 0Z"/><circle cx="11" cy="20" r="1"/></svg>
+                </span>
+                <span>Stocked Wine Fridge</span>
+              </div>
+              <div class="detail-amenity-item">
+                <span class="detail-amenity-icon">
+                  <svg width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><rect x="2" y="3" width="20" height="14" rx="2" ry="2"/><line x1="8" y1="21" x2="16" y2="21"/><line x1="12" y1="17" x2="12" y2="21"/></svg>
+                </span>
+                <span>75" Smart OLED TV</span>
+              </div>
+            </div>
+          </div>
+
+          <!-- Customer Reviews -->
+          <div class="scroll-animate" style="margin-bottom: 4rem;">
+            <h3 style="font-family: var(--font-heading); font-size: 2rem; margin-bottom: 1rem;">Guest Reviews</h3>
+            <div style="background: var(--white); border: 1px solid rgba(0,0,0,0.05); border-radius: var(--radius-sm);">
+              <div class="review-card">
+                <div style="display: flex; justify-content: space-between; margin-bottom: 0.5rem;">
+                  <strong style="font-family: var(--font-body); font-size: 1.1rem;">"Absolute Perfection"</strong>
+                  <span style="color: var(--text-muted); font-size: 0.85rem;">Oct 12, 2025</span>
+                </div>
+                <div style="color: var(--gold); margin-bottom: 1rem; font-size: 0.9rem; letter-spacing: 2px;">★★★★★</div>
+                <p style="color: var(--text-muted); font-size: 0.95rem; line-height: 1.6;">"The Presidential Suite exceeded every expectation. The butler service was impeccable, and waking up to that ocean view is something I'll never forget."</p>
+                <div style="margin-top: 1rem; font-size: 0.85rem; font-weight: 600; text-transform: uppercase; letter-spacing: 1px;">- James C., London</div>
+              </div>
+              <div class="review-card">
+                <div style="display: flex; justify-content: space-between; margin-bottom: 0.5rem;">
+                  <strong style="font-family: var(--font-body); font-size: 1.1rem;">"A Dream Come True"</strong>
+                  <span style="color: var(--text-muted); font-size: 0.85rem;">Sep 28, 2025</span>
+                </div>
+                <div style="color: var(--gold); margin-bottom: 1rem; font-size: 0.9rem; letter-spacing: 2px;">★★★★★</div>
+                <p style="color: var(--text-muted); font-size: 0.95rem; line-height: 1.6;">"We booked this suite for our anniversary. The private dining arranged by our butler on the terrace was the highlight of our trip."</p>
+                <div style="margin-top: 1rem; font-size: 0.85rem; font-weight: 600; text-transform: uppercase; letter-spacing: 1px;">- Sarah & Mark, New York</div>
+              </div>
+            </div>
+          </div>
+        </div>
+
+        <!-- Sticky Sidebar Column -->
+        <div class="room-detail-sidebar scroll-animate delay-4">
+          <div class="booking-widget">
+            <h3 style="font-family: var(--font-heading); font-size: 1.75rem; margin-bottom: 0.5rem; text-align: center;">Reserve Suite</h3>
+            <p style="text-align: center; color: var(--text-muted); font-size: 0.85rem; margin-bottom: 2rem;">Best Rate Guaranteed</p>
+            
+            <form action="booking.html" method="GET">
+              <input type="hidden" name="room" value="presidential">
+              <div class="form-group">
+                <label>Check In</label>
+                <input type="date" required>
+              </div>
+              <div class="form-group">
+                <label>Check Out</label>
+                <input type="date" required>
+              </div>
+              <div class="form-group">
+                <label>Guests</label>
+                <select required>
+                  <option value="1">1 Adult</option>
+                  <option value="2" selected>2 Adults</option>
+                  <option value="3">3 Adults</option>
+                  <option value="4">4 Adults</option>
+                </select>
+              </div>
+              <div class="form-group">
+                <label>Extra Services</label>
+                <div style="display: flex; flex-direction: column; gap: 0.5rem; margin-top: 0.5rem;">
+                  <label style="display: flex; align-items: center; gap: 10px; font-weight: normal; font-size: 0.9rem; text-transform: none; color: var(--navy);"><input type="checkbox" style="width: auto;"> Airport Transfer (+?150)</label>
+                  <label style="display: flex; align-items: center; gap: 10px; font-weight: normal; font-size: 0.9rem; text-transform: none; color: var(--navy);"><input type="checkbox" style="width: auto;"> Champagne Setup (+?90)</label>
+                </div>
+              </div>
+              
+              <div style="border-top: 1px solid rgba(0,0,0,0.1); margin: 2rem 0; padding-top: 1.5rem;">
+                <div style="display: flex; justify-content: space-between; margin-bottom: 0.5rem; font-weight: 600;">
+                  <span>Total Base Price:</span>
+                  <span>₹599</span>
+                </div>
+                <div style="font-size: 0.75rem; color: var(--text-muted); text-align: right;">* Excludes taxes & fees</div>
+              </div>
+
+              <button type="submit" class="btn btn-primary btn-sweep" style="width: 100%; justify-content: center; font-size: 1rem;">Book Now</button>
+            </form>
+          </div>
+          
+          <div style="margin-top: 2rem; text-align: center;">
+            <p style="font-size: 0.85rem; color: var(--text-muted); margin-bottom: 0.5rem;">Need assistance?</p>
+            <a href="contact.html" class="link-underline" style="font-weight: 600;">Contact our reservations team</a>
+          </div>
+        </div>
+
+      </div>
+    </div>
+  </section>
+
+  <!-- Similar Rooms Section -->
+  <section class="section section-beige">
+    <div class="container">
+      <div class="section-header scroll-animate">
+        <span class="section-label">More Options</span>
+        <h2 class="section-title">Similar Accommodations</h2>
+        <div class="section-divider"></div>
+      </div>
+      
+      <div class="rooms-grid">
+        <div class="premium-card room-card scroll-animate">
+          <div class="room-card-image img-zoom">
+            <img src="../assets/rooms/room-2.jpg" alt="Luxury Suite">
+          </div>
+          <div class="room-card-content">
+            <h3>Luxury Suite</h3>
+            <div style="color: var(--gold); margin-bottom: 1rem; letter-spacing: 2px;">★★★★★</div>
+            <p>Spacious living areas and breathtaking panoramic oceanfront views.</p>
+            <div class="room-card-footer">
+              <div class="room-card-price">₹549 <span>/ night</span></div>
+              <a href="room-details.html" class="btn btn-outline" style="padding: 0.5rem 1rem; font-size: 0.7rem;">View</a>
+            </div>
+          </div>
+        </div>
+
+        <div class="premium-card room-card scroll-animate delay-2">
+          <div class="room-card-image img-zoom">
+            <img src="../assets/rooms/room-3.jpg" alt="Beach Villa">
+          </div>
+          <div class="room-card-content">
+            <h3>Beach Villa</h3>
+            <div style="color: var(--gold); margin-bottom: 1rem; letter-spacing: 2px;">★★★★★</div>
+            <p>Direct beach access with a private infinity pool and lush garden.</p>
+            <div class="room-card-footer">
+              <div class="room-card-price">₹1,200 <span>/ night</span></div>
+              <a href="room-details.html" class="btn btn-outline" style="padding: 0.5rem 1rem; font-size: 0.7rem;">View</a>
+            </div>
+          </div>
+        </div>
+
+        <div class="premium-card room-card scroll-animate delay-4">
+          <div class="room-card-image img-zoom">
+            <img src="../assets/rooms/room-1.jpg" alt="Honeymoon Suite">
+          </div>
+          <div class="room-card-content">
+            <h3>Honeymoon Suite</h3>
+            <div style="color: var(--gold); margin-bottom: 1rem; letter-spacing: 2px;">★★★★★</div>
+            <p>A secluded, romantic sanctuary featuring sunset views and couples spa access.</p>
+            <div class="room-card-footer">
+              <div class="room-card-price">₹899 <span>/ night</span></div>
+              <a href="room-details.html" class="btn btn-outline" style="padding: 0.5rem 1rem; font-size: 0.7rem;">View</a>
+            </div>
+          </div>
+        </div>
+      </div>
+    </div>
+  </section>
+
+  <!-- CTA Section -->
+  <section class="cta-section">
+    <div class="container scroll-animate">
+      <span class="section-label">Upgrade Your Stay</span>
+      <h2 class="section-title">Elevate Your Experience</h2>
+      <div class="section-divider"></div>
+      <p>Sign up for Elysium Rewards today and unlock complimentary room upgrades and late checkouts.</p>
+      <a href="contact.html" class="btn btn-outline btn-lg" style="border-color: var(--gold); color: var(--white);">Join Rewards Program</a>
+    </div>
+  </section>
+
+  <!-- Footer Placeholder -->
+  <!-- ===== PROFESSIONAL LUXURY FOOTER COMPONENT ===== -->
+<footer class="footer">
+  <div class="footer-glass">
+    <div class="container">
+      <div class="footer-top">
+        
+        <!-- LEFT SECTION — BRAND IDENTITY -->
+        <div class="footer-brand">
+          <a href="../index.html" class="footer-logo-link">
+            <h2 class="footer-logo">Elysium <span>Grand</span></h2>
+          </a>
+          <p class="footer-description">
+            “Experience unparalleled luxury at Elysium Grand Resort. Where timeless elegance meets modern comfort on the pristine shores of paradise. Discover your ultimate getaway.”
+          </p>
+          
+          <div class="footer-social-section">
+            <div class="footer-social">
+              <!-- Instagram -->
+              <a href="https://instagram.com" target="_blank" class="social-icon" aria-label="Instagram">
+                <svg width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round"><rect x="2" y="2" width="20" height="20" rx="5" ry="5"/><path d="M16 11.37A4 4 0 1 1 12.63 8 4 4 0 0 1 16 11.37z"/><line x1="17.5" y1="6.5" x2="17.51" y2="6.5"/></svg>
+              </a>
+              <!-- Facebook -->
+              <a href="https://facebook.com" target="_blank" class="social-icon" aria-label="Facebook">
+                <svg width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round"><path d="M18 2h-3a5 5 0 0 0-5 5v3H7v4h3v8h4v-8h3l1-4h-4V7a1 1 0 0 1 1-1h3z"/></svg>
+              </a>
+              <!-- WhatsApp -->
+              <a href="https://wa.me/1234567890" target="_blank" class="social-icon" aria-label="WhatsApp">
+                <svg width="18" height="18" viewBox="0 0 24 24" fill="currentColor"><path d="M17.472 14.382c-.297-.149-1.758-.867-2.03-.967-.273-.099-.471-.148-.67.15-.197.297-.767.966-.94 1.164-.173.199-.347.223-.644.075-.297-.15-1.255-.463-2.39-1.475-.883-.788-1.48-1.761-1.653-2.059-.173-.297-.018-.458.13-.606.134-.133.298-.347.446-.52.149-.174.198-.298.298-.497.099-.198.05-.371-.025-.52-.075-.149-.669-1.612-.916-2.207-.242-.579-.487-.5-.669-.51-.173-.008-.371-.01-.57-.01-.198 0-.52.074-.792.372-.272.297-1.04 1.016-1.04 2.479 0 1.462 1.065 2.875 1.213 3.074.149.198 2.096 3.2 5.077 4.487.709.306 1.262.489 1.694.625.712.227 1.36.195 1.871.118.571-.085 1.758-.719 2.006-1.413.248-.694.248-1.289.173-1.413-.074-.124-.272-.198-.57-.347m-5.421 7.403h-.004a9.87 9.87 0 01-5.031-1.378l-.361-.214-3.741.982.998-3.648-.235-.374a9.86 9.86 0 01-1.51-5.26c.001-5.45 4.436-9.884 9.888-9.884 2.64 0 5.122 1.03 6.988 2.898a9.825 9.825 0 012.893 6.994c-.003 5.45-4.437 9.884-9.885 9.884m8.413-18.297A11.815 11.815 0 0012.05 0C5.495 0 .16 5.335.157 11.892c0 2.096.547 4.142 1.588 5.945L.057 24l6.305-1.654a11.882 11.882 0 005.683 1.448h.005c6.554 0 11.89-5.335 11.893-11.893a11.821 11.821 0 00-3.48-8.413z"/></svg>
+              </a>
+              <!-- YouTube -->
+              <a href="https://youtube.com" target="_blank" class="social-icon" aria-label="YouTube">
+                <svg width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round"><path d="M22.54 6.42a2.78 2.78 0 0 0-1.94-2C18.88 4 12 4 12 4s-6.88 0-8.6.42a2.78 2.78 0 0 0-1.94 2C1 8.14 1 12 1 12s0 3.86.42 5.58a2.78 2.78 0 0 0 1.94 2c1.71.42 8.6.42 8.6.42s6.88 0 8.6-.42a2.78 2.78 0 0 0 1.94-2C23 15.86 23 12 23 12s0-3.86-.42-5.58z"/><polygon points="9.75 15.02 15.5 12 9.75 8.98 9.75 15.02"/></svg>
+              </a>
+            </div>
+          </div>
+        </div>
+        
+        <!-- CENTER SECTION — QUICK LINKS -->
+        <div class="footer-nav">
+          <h4 class="footer-heading">Quick Links</h4>
+          <ul class="footer-list">
+            <li><a href="../index.html" class="footer-link">Home</a></li>
+            <li><a href="about.html" class="footer-link">About</a></li>
+            <li><a href="rooms.html" class="footer-link">Rooms & Suites</a></li>
+            <li><a href="booking.html" class="footer-link">Booking</a></li>
+            <li><a href="gallery.html" class="footer-link">Gallery</a></li>
+            <li><a href="contact.html" class="footer-link">Contact</a></li>
+            <li><a href="contact.html#faq" class="footer-link">FAQ</a></li>
+            <li><a href="sitemap.html" class="footer-link">Sitemap</a></li>
+          </ul>
+        </div>
+        
+        <!-- RIGHT SECTION — CONTACT -->
+        <div class="footer-contact">
+          <h4 class="footer-heading">Contact</h4>
+          <div class="footer-contact-info">
+            <a href="https://maps.google.com/?q=Elysium+Grand+Resort+Maldives" target="_blank" class="contact-item link">
+              <div class="contact-icon-small">
+                <svg width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.5"><path d="M20 10c0 6-8 12-8 12s-8-6-8-12a8 8 0 0 1 16 0Z"/><circle cx="12" cy="10" r="3"/></svg>
+              </div>
+              <p>Elysium Grand Resort<br>Ocean Breeze Avenue,<br>Maldives Luxury Coast</p>
+            </a>
+            
+            <a href="mailto:info@elysiumgrand.com" class="contact-item link">
+              <div class="contact-icon-small">
+                <svg width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.5"><rect width="20" height="16" x="2" y="4" rx="2"/><path d="m22 7-8.97 5.7a1.94 1.94 0 0 1-2.06 0L2 7"/></svg>
+              </div>
+              <p>info@elysiumgrand.com</p>
+            </a>
+            
+            <a href="tel:+919876543210" class="contact-item link">
+              <div class="contact-icon-small">
+                <svg width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.5"><path d="M22 16.92v3a2 2 0 0 1-2.18 2 19.79 19.79 0 0 1-8.63-3.07 19.5 19.5 0 0 1-6-6 19.79 19.79 0 0 1-3.07-8.67A2 2 0 0 1 4.11 2h3a2 2 0 0 1 2 1.72 12.84 12.84 0 0 0 .7 2.81 2 2 0 0 1-.45 2.11L8.09 9.91a16 16 0 0 0 6 6l1.27-1.27a2 2 0 0 1 2.11-.45 12.84 12.84 0 0 0 2.81.7A2 2 0 0 1 22 16.92z"/></svg>
+              </div>
+              <p>+91 98765 43210</p>
+            </a>
+            
+            <div class="contact-status">
+              <p>Available 24/7 for reservations</p>
+            </div>
+          </div>
+        </div>
+      </div>
+      
+      <!-- BOTTOM FOOTER BAR -->
+      <div class="footer-bottom">
+        <div class="footer-divider-luxury"></div>
+        <div class="footer-bottom-wrap">
+          <div class="copyright-left">
+            <p>&copy; <span id="current-year"></span> Elysium Grand Resort. All Rights Reserved.</p>
+          </div>
+          <div class="footer-bottom-links">
+            <a href="privacy-policy.html">Privacy Policy</a>
+            <a href="terms-conditions.html">Terms & Conditions</a>
+            <a href="contact.html#faq">FAQ</a>
+            <a href="404.html">404 Page</a>
+          </div>
+        </div>
+      </div>
+    </div>
+  </div>
+</footer>
+
+
+  <!-- Scroll to Top -->
+  <button class="scroll-top" id="scroll-top" aria-label="Scroll to top">↑</button>
+
+  <script src="../js/main.js"></script>
+  <script>
+    // Local Custom Image Slider Logic
+    document.addEventListener('DOMContentLoaded', () => {
+      const slides = document.querySelectorAll('.room-slide');
+      const thumbs = document.querySelectorAll('.slider-thumb');
+      const prevBtn = document.getElementById('prevSlide');
+      const nextBtn = document.getElementById('nextSlide');
+      let currentSlide = 0;
+      let slideInterval;
+
+      function goToSlide(index) {
+        // Remove active class
+        slides[currentSlide].classList.remove('active');
+        thumbs[currentSlide].classList.remove('active');
+        
+        // Update index
+        currentSlide = index;
+        if (currentSlide >= slides.length) currentSlide = 0;
+        if (currentSlide < 0) currentSlide = slides.length - 1;
+        
+        // Add active class
+        slides[currentSlide].classList.add('active');
+        thumbs[currentSlide].classList.add('active');
+      }
+
+      function nextSlide() { goToSlide(currentSlide + 1); }
+      function prevSlide() { goToSlide(currentSlide - 1); }
+
+      // Event Listeners
+      nextBtn.addEventListener('click', () => {
+        nextSlide();
+        resetInterval();
+      });
+      
+      prevBtn.addEventListener('click', () => {
+        prevSlide();
+        resetInterval();
+      });
+
+      thumbs.forEach((thumb, index) => {
+        thumb.addEventListener('click', () => {
+          goToSlide(index);
+          resetInterval();
+        });
+      });
+
+      // Autoplay
+      function startInterval() {
+        slideInterval = setInterval(nextSlide, 5000);
+      }
+
+      function resetInterval() {
+        clearInterval(slideInterval);
+        startInterval();
+      }
+
+      startInterval();
+    });
+  </script>
+</body>
+</html>
+
+
+
+

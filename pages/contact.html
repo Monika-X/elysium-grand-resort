@@ -1,0 +1,727 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <meta name="description" content="Contact Elysium Grand Resort. Reach out to us for reservations, inquiries, or special requests.">
+  <title>Contact Us | Elysium Grand Resort</title>
+  <link rel="stylesheet" href="../css/style.css">
+  <link rel="stylesheet" href="../css/animations.css">
+  <link rel="stylesheet" href="../css/responsive.css">
+  <style>
+    /* Contact Page Specific Styles */
+    
+    .contact-layout {
+      display: grid;
+      grid-template-columns: 1fr 1fr;
+      gap: 5rem;
+    }
+
+    /* Contact Cards */
+    .contact-info-cards {
+      display: grid;
+      gap: 1.5rem;
+      margin-bottom: 3rem;
+    }
+
+    .contact-info-card {
+      display: flex;
+      align-items: flex-start;
+      gap: 1.5rem;
+      padding: 2rem;
+      background: var(--white);
+      border: 1px solid rgba(0,0,0,0.05);
+      border-radius: var(--radius-sm);
+      transition: all var(--transition-smooth);
+    }
+
+    .contact-info-card:hover {
+      box-shadow: var(--shadow-md);
+      transform: translateX(10px);
+      border-color: var(--gold-light);
+    }
+
+    .contact-icon {
+      width: 50px;
+      height: 50px;
+      border-radius: 50%;
+      background: var(--navy);
+      color: var(--gold);
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      font-size: 1.25rem;
+      flex-shrink: 0;
+      transition: background var(--transition-fast);
+    }
+
+    .contact-info-card:hover .contact-icon {
+      background: var(--gold);
+      color: var(--white);
+    }
+
+    .contact-info h4 {
+      font-family: var(--font-heading);
+      font-size: 1.25rem;
+      margin-bottom: 0.5rem;
+      color: var(--navy);
+    }
+
+    .contact-info p {
+      color: var(--text-muted);
+      font-size: 0.9rem;
+      line-height: 1.6;
+    }
+
+    /* Social Links */
+    .contact-social {
+      display: flex;
+      gap: 1rem;
+    }
+    
+    .contact-social a {
+      width: 45px;
+      height: 45px;
+      border-radius: 50%;
+      border: 1px solid var(--gold);
+      color: var(--gold);
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      transition: all var(--transition-fast);
+    }
+
+    .contact-social a:hover {
+      background: var(--gold);
+      color: var(--white);
+      transform: translateY(-5px);
+      box-shadow: 0 5px 15px rgba(212, 175, 55, 0.3);
+    }
+
+    /* Contact Form */
+    .contact-form-wrapper {
+      background: var(--white);
+      padding: 3rem;
+      border-radius: var(--radius-sm);
+      box-shadow: var(--shadow-lg);
+      border-top: 4px solid var(--gold);
+    }
+
+    .form-group.error input,
+    .form-group.error textarea {
+      border-color: #e74c3c;
+    }
+    .form-group.error label {
+      color: #e74c3c;
+    }
+    
+    .form-success-msg {
+      display: none;
+      padding: 1rem;
+      background: rgba(46, 204, 113, 0.1);
+      border: 1px solid #2ecc71;
+      color: #27ae60;
+      border-radius: var(--radius-sm);
+      margin-bottom: 1.5rem;
+      text-align: center;
+      font-weight: 500;
+    }
+
+    /* FAQ Accordion */
+    .faq-section {
+      max-width: 800px;
+      margin: 0 auto;
+    }
+
+    .accordion-item {
+      border-bottom: 1px solid rgba(0,0,0,0.1);
+      margin-bottom: 1rem;
+    }
+
+    .accordion-header {
+      width: 100%;
+      padding: 1.5rem 0;
+      background: transparent;
+      border: none;
+      display: flex;
+      justify-content: space-between;
+      align-items: center;
+      cursor: pointer;
+      font-family: var(--font-heading);
+      font-size: 1.25rem;
+      color: var(--navy);
+      text-align: left;
+      transition: color var(--transition-fast);
+    }
+
+    .accordion-header:hover {
+      color: var(--gold);
+    }
+
+    .accordion-icon {
+      font-size: 1.5rem;
+      color: var(--gold);
+      transition: transform var(--transition-smooth);
+    }
+
+    .accordion-item.active .accordion-icon {
+      transform: rotate(45deg);
+    }
+
+    .accordion-content {
+      max-height: 0;
+      overflow: hidden;
+      transition: max-height var(--transition-smooth);
+    }
+
+    .accordion-content p {
+      padding-bottom: 1.5rem;
+      color: var(--text-muted);
+      line-height: 1.8;
+    }
+
+    /* Google Maps */
+    .map-container {
+      width: 100%;
+      height: 500px;
+      background: var(--beige-dark);
+      position: relative;
+    }
+
+    .map-container iframe {
+      width: 100%;
+      height: 100%;
+      border: none;
+      /* Removed grayscale filter for a colorful map */
+    }
+
+    @media (max-width: 992px) {
+      .contact-layout { grid-template-columns: 1fr; gap: 3rem; }
+      /* Support services 3-col → 1-col */
+      .section .grid[style*="repeat(3, 1fr)"] {
+        grid-template-columns: 1fr !important;
+        max-width: 480px;
+        margin-left: auto;
+        margin-right: auto;
+      }
+      /* Social icons row */
+      [style*="display: flex"][style*="gap: 2rem"][style*="justify-content: center"] {
+        flex-wrap: wrap;
+        gap: 1rem !important;
+      }
+      /* Map height */
+      .map-container {
+        height: 320px;
+      }
+    }
+    @media (max-width: 768px) {
+      .contact-info-card {
+        flex-direction: column;
+        gap: 0.75rem;
+        padding: 1.25rem;
+      }
+      .contact-form-wrapper {
+        padding: 2rem;
+      }
+      .map-container {
+        height: 260px;
+      }
+    }
+    @media (max-width: 576px) {
+      .contact-form-wrapper {
+        padding: 1.5rem;
+      }
+      .contact-social {
+        flex-wrap: wrap;
+        gap: 0.6rem;
+      }
+      .map-container {
+        height: 220px;
+      }
+    }
+  </style>
+</head>
+<body>
+  <!-- Preloader -->
+  <div class="preloader" id="preloader">
+    <div class="preloader-inner">
+      <div class="logo">Elysium Grand</div>
+      <div class="preloader-bar"></div>
+    </div>
+  </div>
+
+  <!-- Navbar Placeholder -->
+  <!-- ===== NAVBAR COMPONENT ===== -->
+<nav class="navbar" id="main-navbar">
+  <div class="container">
+    <a href="../index.html" class="logo">Elysium <span>Grand</span></a>
+
+    <div class="nav-overlay" id="nav-overlay"></div>
+
+    <ul class="nav-menu" id="nav-menu">
+      <li><a href="../index.html" class="link-underline">Home</a></li>
+      <li><a href="about.html" class="link-underline">About</a></li>
+      <li><a href="rooms.html" class="link-underline">Rooms</a></li>
+      <li><a href="booking.html" class="link-underline">Booking</a></li>
+      <li><a href="gallery.html" class="link-underline">Gallery</a></li>
+      <li><a href="contact.html" class="active">Contact</a></li>
+    </ul>
+
+    <button class="hamburger" id="hamburger" aria-label="Toggle menu">
+      <span></span>
+      <span></span>
+      <span></span>
+    </button>
+  </div>
+</nav>
+
+
+  <!-- Page Hero -->
+  <section class="page-hero">
+    <div class="container">
+      <h1 class="animate-fade-up">Get in Touch</h1>
+      <p class="animate-fade-up delay-2">We are here to assist you with anything you need.</p>
+      <div class="breadcrumb animate-fade-up delay-3">
+        <a href="../index.html">Home</a><span>/</span><span>Contact</span>
+      </div>
+    </div>
+  </section>
+
+  <!-- Contact Section -->
+  <section class="section section-beige" style="padding-top: 0; margin-top: -60px; position: relative; z-index: 10; background: transparent;">
+    <div class="container">
+      <div class="contact-layout">
+        
+        <!-- Contact Information -->
+        <div class="scroll-animate">
+          <div style="background: var(--white); padding: 3rem; border-radius: var(--radius-sm); box-shadow: var(--shadow-sm); height: 100%;">
+            <span class="section-label">Contact Information</span>
+            <h2 style="font-family: var(--font-hero); font-size: 2.5rem; color: var(--navy); margin-bottom: 1rem;">We'd Love to Hear From You</h2>
+            <p style="color: var(--text-muted); margin-bottom: 3rem; line-height: 1.8;">Whether you have a question about our resort, need assistance with your reservation, or have special requests for your upcoming stay, our dedicated concierge team is available 24/7.</p>
+            
+            <div class="contact-info-cards">
+              
+              <!-- Address -->
+              <a href="https://maps.google.com/?q=Paradise+Bay+Maldives" target="_blank" class="contact-info-card" style="text-decoration: none;">
+                <div class="contact-icon">
+                  <svg width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M20 10c0 6-8 12-8 12s-8-6-8-12a8 8 0 0 1 16 0Z"/><circle cx="12" cy="10" r="3"/></svg>
+                </div>
+                <div class="contact-info">
+                  <h4>Resort Address</h4>
+                  <p>123 Paradise Bay, North Atoll<br>Maldives, 00000</p>
+                </div>
+              </a>
+              
+              <!-- Phone -->
+              <a href="tel:+18005555893" class="contact-info-card delay-2" style="text-decoration: none;">
+                <div class="contact-icon">
+                  <svg width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M22 16.92v3a2 2 0 0 1-2.18 2 19.79 19.79 0 0 1-8.63-3.07 19.5 19.5 0 0 1-6-6 19.79 19.79 0 0 1-3.07-8.67A2 2 0 0 1 4.11 2h3a2 2 0 0 1 2 1.72 12.84 12.84 0 0 0 .7 2.81 2 2 0 0 1-.45 2.11L8.09 9.91a16 16 0 0 0 6 6l1.27-1.27a2 2 0 0 1 2.11-.45 12.84 12.84 0 0 0 2.81.7A2 2 0 0 1 22 16.92z"/></svg>
+                </div>
+                <div class="contact-info">
+                  <h4>Phone Number</h4>
+                  <p>+1 (800) 555-LUXE (Toll-Free)<br>+960 555-0199 (Direct)</p>
+                </div>
+              </a>
+              
+              <!-- Email -->
+              <a href="mailto:reservations@elysiumgrand.com" class="contact-info-card delay-4" style="text-decoration: none;">
+                <div class="contact-icon">
+                  <svg width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><rect width="20" height="16" x="2" y="4" rx="2"/><path d="m22 7-8.97 5.7a1.94 1.94 0 0 1-2.06 0L2 7"/></svg>
+                </div>
+                <div class="contact-info">
+                  <h4>Email Address</h4>
+                  <p>reservations@elysiumgrand.com<br>concierge@elysiumgrand.com</p>
+                </div>
+              </a>
+
+            </div>
+
+            <div style="margin-top: 3rem;">
+              <h4 style="font-family: var(--font-heading); font-size: 1.25rem; color: var(--navy); margin-bottom: 1rem;">Follow Our Journey</h4>
+              <div class="contact-social">
+                <a href="https://facebook.com" target="_blank" aria-label="Facebook"><svg width="18" height="18" viewBox="0 0 24 24" fill="currentColor"><path d="M18 2h-3a5 5 0 0 0-5 5v3H7v4h3v8h4v-8h3l1-4h-4V7a1 1 0 0 1 1-1h3z"/></svg></a>
+                <a href="https://instagram.com" target="_blank" aria-label="Instagram"><svg width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><rect x="2" y="2" width="20" height="20" rx="5"/><circle cx="12" cy="12" r="4"/></svg></a>
+                <a href="https://wa.me/1234567890" target="_blank" aria-label="WhatsApp"><svg width="18" height="18" viewBox="0 0 24 24" fill="currentColor"><path d="M17.472 14.382c-.297-.149-1.758-.867-2.03-.967-.273-.099-.471-.148-.67.15-.197.297-.767.966-.94 1.164-.173.199-.347.223-.644.075-.297-.15-1.255-.463-2.39-1.475-.883-.788-1.48-1.761-1.653-2.059-.173-.297-.018-.458.13-.606.134-.133.298-.347.446-.52.149-.174.198-.298.298-.497.099-.198.05-.371-.025-.52-.075-.149-.669-1.612-.916-2.207-.242-.579-.487-.5-.669-.51-.173-.008-.371-.01-.57-.01-.198 0-.52.074-.792.372-.272.297-1.04 1.016-1.04 2.479 0 1.462 1.065 2.875 1.213 3.074.149.198 2.096 3.2 5.077 4.487.709.306 1.262.489 1.694.625.712.227 1.36.195 1.871.118.571-.085 1.758-.719 2.006-1.413.248-.694.248-1.289.173-1.413-.074-.124-.272-.198-.57-.347m-5.421 7.403h-.004a9.87 9.87 0 01-5.031-1.378l-.361-.214-3.741.982.998-3.648-.235-.374a9.86 9.86 0 01-1.51-5.26c.001-5.45 4.436-9.884 9.888-9.884 2.64 0 5.122 1.03 6.988 2.898a9.825 9.825 0 012.893 6.994c-.003 5.45-4.437 9.884-9.885 9.884m8.413-18.297A11.815 11.815 0 0012.05 0C5.495 0 .16 5.335.157 11.892c0 2.096.547 4.142 1.588 5.945L.057 24l6.305-1.654a11.882 11.882 0 005.683 1.448h.005c6.554 0 11.89-5.335 11.893-11.893a11.821 11.821 0 00-3.48-8.413z"/></svg></a>
+                <a href="https://x.com" target="_blank" aria-label="X"><svg width="18" height="18" viewBox="0 0 24 24" fill="currentColor"><path d="M18.901 1.153h3.68l-8.04 9.19L24 22.846h-7.406l-5.8-7.584-6.638 7.584H.474l8.6-9.83L0 1.154h7.594l5.243 6.932ZM17.61 20.644h2.039L6.486 3.24H4.298Z"/></svg></a>
+              </div>
+            </div>
+          </div>
+        </div>
+
+        <!-- Contact Form -->
+        <div class="contact-form-wrapper scroll-animate delay-2">
+          <h3 style="font-family: var(--font-heading); font-size: 2rem; color: var(--navy); margin-bottom: 1.5rem;">Send Us a Message</h3>
+          
+          <div class="form-success-msg" id="form-success">
+            Thank you! Your message has been sent successfully. We will contact you shortly.
+          </div>
+
+          <form id="contact-form" novalidate>
+            <div class="form-row">
+              <div class="form-group">
+                <label for="name">Full Name *</label>
+                <input type="text" id="name" required placeholder="E.g. John Doe">
+              </div>
+              <div class="form-group">
+                <label for="email">Email Address *</label>
+                <input type="email" id="email" required placeholder="john@example.com">
+              </div>
+            </div>
+            
+            <div class="form-row">
+              <div class="form-group">
+                <label for="phone">Phone Number</label>
+                <input type="tel" id="phone" placeholder="+1 (555) 000-0000">
+              </div>
+              <div class="form-group">
+                <label for="subject">Subject *</label>
+                <select id="subject" required>
+                  <option value="">Select an inquiry type</option>
+                  <option value="reservation">Room Reservation</option>
+                  <option value="events">Weddings & Events</option>
+                  <option value="dining">Dining & Spa</option>
+                  <option value="feedback">Guest Feedback</option>
+                  <option value="other">Other</option>
+                </select>
+              </div>
+            </div>
+            
+            <div class="form-group">
+              <label for="message">Your Message *</label>
+              <textarea id="message" rows="5" required placeholder="How can we assist you today?"></textarea>
+            </div>
+            
+            <button type="submit" class="btn btn-primary btn-sweep btn-lg" style="width: 100%; justify-content: center;">Send Message</button>
+            
+            <div style="margin-top: 2.5rem; padding-top: 2rem; border-top: 1px solid rgba(0,0,0,0.05); text-align: center;">
+              <div style="display: inline-block; margin-bottom: 1rem; color: var(--gold);">
+                <svg width="32" height="32" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round"><path d="M12 22s8-4 8-10V5l-8-3-8 3v7c0 6 8 10 8 10z"/></svg>
+              </div>
+              <p style="font-size: 0.9rem; color: var(--navy); font-weight: 500; margin-bottom: 0.5rem;">Elysium Trust & Privacy</p>
+              <p style="font-size: 0.8rem; color: var(--text-muted); line-height: 1.6; max-width: 300px; margin: 0 auto;">Your data is protected by industry-standard encryption. We guarantee a personalized response from our concierge team within 24 hours.</p>
+              
+              <div style="margin-top: 1.5rem; display: flex; justify-content: center; gap: 2rem; opacity: 0.5; filter: grayscale(1);">
+                <span style="font-family: var(--font-hero); font-size: 0.7rem; letter-spacing: 2px;">LUXURY ALLIANCE</span>
+                <span style="font-family: var(--font-hero); font-size: 0.7rem; letter-spacing: 2px;">5-STAR SECURE</span>
+              </div>
+
+              <div style="margin-top: 2rem; padding-top: 1.5rem; border-top: 1px dashed rgba(0,0,0,0.1);">
+                <p style="font-size: 0.8rem; color: var(--text-muted); margin-bottom: 1rem;">Prefer instant messaging?</p>
+                <a href="https://wa.me/1234567890" target="_blank" class="btn btn-outline" style="padding: 0.5rem 1.5rem; font-size: 0.8rem; display: inline-flex; align-items: center; gap: 10px;">
+                  <svg width="16" height="16" viewBox="0 0 24 24" fill="currentColor"><path d="M17.472 14.382c-.297-.149-1.758-.867-2.03-.967-.273-.099-.471-.148-.67.15-.197.297-.767.966-.94 1.164-.173.199-.347.223-.644.075-.297-.15-1.255-.463-2.39-1.475-.883-.788-1.48-1.761-1.653-2.059-.173-.297-.018-.458.13-.606.134-.133.298-.347.446-.52.149-.174.198-.298.298-.497.099-.198.05-.371-.025-.52-.075-.149-.669-1.612-.916-2.207-.242-.579-.487-.5-.669-.51-.173-.008-.371-.01-.57-.01-.198 0-.52.074-.792.372-.272.297-1.04 1.016-1.04 2.479 0 1.462 1.065 2.875 1.213 3.074.149.198 2.096 3.2 5.077 4.487.709.306 1.262.489 1.694.625.712.227 1.36.195 1.871.118.571-.085 1.758-.719 2.006-1.413.248-.694.248-1.289.173-1.413-.074-.124-.272-.198-.57-.347m-5.421 7.403h-.004a9.87 9.87 0 01-5.031-1.378l-.361-.214-3.741.982.998-3.648-.235-.374a9.86 9.86 0 01-1.51-5.26c.001-5.45 4.436-9.884 9.888-9.884 2.64 0 5.122 1.03 6.988 2.898a9.825 9.825 0 012.893 6.994c-.003 5.45-4.437 9.884-9.885 9.884m8.413-18.297A11.815 11.815 0 0012.05 0C5.495 0 .16 5.335.157 11.892c0 2.096.547 4.142 1.588 5.945L.057 24l6.305-1.654a11.882 11.882 0 005.683 1.448h.005c6.554 0 11.89-5.335 11.893-11.893a11.821 11.821 0 00-3.48-8.413Z"/></svg>
+                  Chat on WhatsApp
+                </a>
+                <div style="margin-top: 1.5rem;">
+                  <p style="font-family: 'Playfair Display', serif; font-style: italic; font-size: 1.1rem; color: var(--navy); margin-bottom: 0;">Sofia Valente</p>
+                  <p style="font-size: 0.7rem; text-transform: uppercase; letter-spacing: 1px; color: var(--gold);">Chief Concierge Officer</p>
+                </div>
+              </div>
+            </div>
+          </form>
+        </div>
+        
+      </div>
+    </div>
+  </section>
+
+  <!-- Resort Support Information -->
+  <section class="section">
+    <div class="container">
+      <div class="section-header scroll-animate">
+        <span class="section-label">Guest Services</span>
+        <h2 class="section-title">24/7 Resort Support</h2>
+        <div class="section-divider"></div>
+      </div>
+      <div class="grid" style="grid-template-columns: repeat(3, 1fr); gap: 2rem;">
+        <div class="premium-card scroll-animate" style="padding: 2.5rem; text-align: center;">
+          <div style="font-size: 2.5rem; margin-bottom: 1rem;">
+            <svg width="40" height="40" viewBox="0 0 24 24" fill="none" stroke="var(--gold)" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round"><path d="M19 21v-2a4 4 0 0 0-4-4H9a4 4 0 0 0-4 4v2"/><circle cx="12" cy="7" r="4"/></svg>
+          </div>
+          <h3 style="margin-bottom: 1rem;">Concierge Desk</h3>
+          <p style="color: var(--text-muted); font-size: 0.9rem;">Available around the clock to arrange excursions, private dining, and transportation.</p>
+        </div>
+        <div class="premium-card scroll-animate delay-2" style="padding: 2.5rem; text-align: center;">
+          <div style="font-size: 2.5rem; margin-bottom: 1rem;">
+            <svg width="40" height="40" viewBox="0 0 24 24" fill="none" stroke="var(--gold)" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round"><path d="M3 2v7c0 1.1.9 2 2 2h4a2 2 0 0 0 2-2V2"/><path d="M7 2v20"/><path d="M21 15V2v0a5 5 0 0 0-5 5v6c0 1.1.9 2 2 2h3Zm0 0v7"/></svg>
+          </div>
+          <h3 style="margin-bottom: 1rem;">In-Room Dining</h3>
+          <p style="color: var(--text-muted); font-size: 0.9rem;">Experience our signature culinary creations delivered directly to your suite or villa.</p>
+        </div>
+        <div class="premium-card scroll-animate delay-4" style="padding: 2.5rem; text-align: center;">
+          <div style="font-size: 2.5rem; margin-bottom: 1rem;">
+            <svg width="40" height="40" viewBox="0 0 24 24" fill="none" stroke="var(--gold)" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round"><path d="M22 12h-4l-3 9L9 3l-3 9H2"/></svg>
+          </div>
+          <h3 style="margin-bottom: 1rem;">Medical Assistance</h3>
+          <p style="color: var(--text-muted); font-size: 0.9rem;">On-call medical professionals available 24/7 to ensure your health and safety.</p>
+        </div>
+      </div>
+    </div>
+  </section>
+
+  <!-- Social Media Section -->
+  <section class="section section-dark" style="text-align: center;">
+    <div class="container scroll-animate">
+      <h2 style="font-family: var(--font-hero); font-size: 3rem; color: var(--gold); margin-bottom: 1.5rem;">Join Our Community</h2>
+      <p style="color: rgba(255,255,255,0.8); max-width: 600px; margin: 0 auto 3rem;">Follow us on social media for exclusive glimpses of paradise, behind-the-scenes resort updates, and travel inspiration.</p>
+      <div style="display: flex; justify-content: center; gap: 2rem;">
+        <a href="https://facebook.com" target="_blank" style="color: var(--white); font-size: 1.5rem; width: 60px; height: 60px; display: flex; align-items: center; justify-content: center; border: 1px solid rgba(255,255,255,0.2); border-radius: 50%; transition: all var(--transition-fast);"><svg width="24" height="24" viewBox="0 0 24 24" fill="currentColor"><path d="M18 2h-3a5 5 0 0 0-5 5v3H7v4h3v8h4v-8h3l1-4h-4V7a1 1 0 0 1 1-1h3z"/></svg></a>
+        <a href="https://instagram.com" target="_blank" style="color: var(--white); font-size: 1.5rem; width: 60px; height: 60px; display: flex; align-items: center; justify-content: center; border: 1px solid rgba(255,255,255,0.2); border-radius: 50%; transition: all var(--transition-fast);"><svg width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><rect x="2" y="2" width="20" height="20" rx="5"/><circle cx="12" cy="12" r="4"/></svg></a>
+        <a href="https://wa.me/1234567890" target="_blank" style="color: var(--white); font-size: 1.5rem; width: 60px; height: 60px; display: flex; align-items: center; justify-content: center; border: 1px solid rgba(255,255,255,0.2); border-radius: 50%; transition: all var(--transition-fast);"><svg width="24" height="24" viewBox="0 0 24 24" fill="currentColor"><path d="M17.472 14.382c-.297-.149-1.758-.867-2.03-.967-.273-.099-.471-.148-.67.15-.197.297-.767.966-.94 1.164-.173.199-.347.223-.644.075-.297-.15-1.255-.463-2.39-1.475-.883-.788-1.48-1.761-1.653-2.059-.173-.297-.018-.458.13-.606.134-.133.298-.347.446-.52.149-.174.198-.298.298-.497.099-.198.05-.371-.025-.52-.075-.149-.669-1.612-.916-2.207-.242-.579-.487-.5-.669-.51-.173-.008-.371-.01-.57-.01-.198 0-.52.074-.792.372-.272.297-1.04 1.016-1.04 2.479 0 1.462 1.065 2.875 1.213 3.074.149.198 2.096 3.2 5.077 4.487.709.306 1.262.489 1.694.625.712.227 1.36.195 1.871.118.571-.085 1.758-.719 2.006-1.413.248-.694.248-1.289.173-1.413-.074-.124-.272-.198-.57-.347m-5.421 7.403h-.004a9.87 9.87 0 01-5.031-1.378l-.361-.214-3.741.982.998-3.648-.235-.374a9.86 9.86 0 01-1.51-5.26c.001-5.45 4.436-9.884 9.888-9.884 2.64 0 5.122 1.03 6.988 2.898a9.825 9.825 0 012.893 6.994c-.003 5.45-4.437 9.884-9.885 9.884m8.413-18.297A11.815 11.815 0 0012.05 0C5.495 0 .16 5.335.157 11.892c0 2.096.547 4.142 1.588 5.945L.057 24l6.305-1.654a11.882 11.882 0 005.683 1.448h.005c6.554 0 11.89-5.335 11.893-11.893a11.821 11.821 0 00-3.48-8.413z"/></svg></a>
+        <a href="https://x.com" target="_blank" style="color: var(--white); font-size: 1.5rem; width: 60px; height: 60px; display: flex; align-items: center; justify-content: center; border: 1px solid rgba(255,255,255,0.2); border-radius: 50%; transition: all var(--transition-fast);"><svg width="24" height="24" viewBox="0 0 24 24" fill="currentColor"><path d="M18.901 1.153h3.68l-8.04 9.19L24 22.846h-7.406l-5.8-7.584-6.638 7.584H.474l8.6-9.83L0 1.154h7.594l5.243 6.932ZM17.61 20.644h2.039L6.486 3.24H4.298Z"/></svg></a>
+      </div>
+    </div>
+  </section>
+
+  <!-- FAQ Accordion -->
+  <section class="section section-cream" id="faq">
+    <div class="container">
+      <div class="section-header scroll-animate">
+        <span class="section-label">General Questions</span>
+        <h2 class="section-title">Frequently Asked Questions</h2>
+        <div class="section-divider"></div>
+      </div>
+      
+      <div class="faq-section scroll-animate delay-2">
+        
+        <div class="accordion-item">
+          <button class="accordion-header">
+            <span>What are the check-in and check-out times?</span>
+            <span class="accordion-icon">+</span>
+          </button>
+          <div class="accordion-content">
+            <p>Standard check-in time is 3:00 PM, and check-out is 12:00 PM (Noon). We offer early check-in and late check-out based on availability. Please contact our concierge to make arrangements.</p>
+          </div>
+        </div>
+
+        <div class="accordion-item">
+          <button class="accordion-header">
+            <span>Do you offer airport transportation?</span>
+            <span class="accordion-icon">+</span>
+          </button>
+          <div class="accordion-content">
+            <p>Yes, we offer luxury private speedboat or seaplane transfers directly from the international airport. These can be arranged during the booking process or by contacting our reservations team.</p>
+          </div>
+        </div>
+
+        <div class="accordion-item">
+          <button class="accordion-header">
+            <span>Is the resort family-friendly?</span>
+            <span class="accordion-icon">+</span>
+          </button>
+          <div class="accordion-content">
+            <p>Absolutely. We offer spacious Family Rooms and Beach Villas, alongside a dedicated Kids' Club, family pool area, and specialized dining menus designed for younger guests.</p>
+          </div>
+        </div>
+
+        <div class="accordion-item">
+          <button class="accordion-header">
+            <span>Are pets allowed at the resort?</span>
+            <span class="accordion-icon">+</span>
+          </button>
+          <div class="accordion-content">
+            <p>To ensure the comfort of all our guests and protect the local wildlife, Elysium Grand is a pet-free resort. Certified service animals are an exception with prior notice.</p>
+          </div>
+        </div>
+
+        <div class="accordion-item">
+          <button class="accordion-header">
+            <span>What is the dress code for dining?</span>
+            <span class="accordion-icon">+</span>
+          </button>
+          <div class="accordion-content">
+            <p>Our signature restaurants observe an "Elegant Resort Wear" dress code. We kindly request that guests refrain from wearing swimwear or sleeveless shirts for gentlemen during dinner service.</p>
+          </div>
+        </div>
+
+        <div class="accordion-item">
+          <button class="accordion-header">
+            <span>Is high-speed Wi-Fi available?</span>
+            <span class="accordion-icon">+</span>
+          </button>
+          <div class="accordion-content">
+            <p>Complimentary high-speed fiber-optic Wi-Fi is available throughout the resort, including all guest suites, villas, public areas, and even on the beach, ensuring you stay connected in paradise.</p>
+          </div>
+        </div>
+
+        <div class="accordion-item">
+          <button class="accordion-header">
+            <span>Can you accommodate special dietary needs?</span>
+            <span class="accordion-icon">+</span>
+          </button>
+          <div class="accordion-content">
+            <p>Yes, our world-class chefs are experienced in accommodating all dietary requirements, including vegan, gluten-free, halal, and specific allergy-related needs. Please inform us of your preferences during booking.</p>
+          </div>
+        </div>
+
+      </div>
+    </div>
+  </section>
+
+  <!-- Google Maps -->
+  <section class="map-container scroll-animate">
+    <!-- Using a styled iframe for Google Maps. Coordinates point to Maldives. -->
+    <iframe src="https://www.google.com/maps/embed?pb=!1m18!1m12!1m3!1d8159086.303178883!2d68.49007469720412!3d3.113524584752538!2m3!1f0!2f0!3f0!3m2!1i1024!2i768!4f13.1!3m3!1m2!1s0x24b599bfaafb7bbd%3A0x414509e181956289!2sMaldives!5e0!3m2!1sen!2sus!4v1715150000000!5m2!1sen!2sus" allowfullscreen="" loading="lazy" referrerpolicy="no-referrer-when-downgrade"></iframe>
+  </section>
+
+  <!-- Footer Placeholder -->
+  <!-- ===== PROFESSIONAL LUXURY FOOTER COMPONENT ===== -->
+<footer class="footer">
+  <div class="footer-glass">
+    <div class="container">
+      <div class="footer-top">
+        
+        <!-- LEFT SECTION — BRAND IDENTITY -->
+        <div class="footer-brand">
+          <a href="../index.html" class="footer-logo-link">
+            <h2 class="footer-logo">Elysium <span>Grand</span></h2>
+          </a>
+          <p class="footer-description">
+            “Experience unparalleled luxury at Elysium Grand Resort. Where timeless elegance meets modern comfort on the pristine shores of paradise. Discover your ultimate getaway.”
+          </p>
+          
+          <div class="footer-social-section">
+            <div class="footer-social">
+              <!-- Instagram -->
+              <a href="https://instagram.com" target="_blank" class="social-icon" aria-label="Instagram">
+                <svg width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round"><rect x="2" y="2" width="20" height="20" rx="5" ry="5"/><path d="M16 11.37A4 4 0 1 1 12.63 8 4 4 0 0 1 16 11.37z"/><line x1="17.5" y1="6.5" x2="17.51" y2="6.5"/></svg>
+              </a>
+              <!-- Facebook -->
+              <a href="https://facebook.com" target="_blank" class="social-icon" aria-label="Facebook">
+                <svg width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round"><path d="M18 2h-3a5 5 0 0 0-5 5v3H7v4h3v8h4v-8h3l1-4h-4V7a1 1 0 0 1 1-1h3z"/></svg>
+              </a>
+              <!-- WhatsApp -->
+              <a href="https://wa.me/1234567890" target="_blank" class="social-icon" aria-label="WhatsApp">
+                <svg width="18" height="18" viewBox="0 0 24 24" fill="currentColor"><path d="M17.472 14.382c-.297-.149-1.758-.867-2.03-.967-.273-.099-.471-.148-.67.15-.197.297-.767.966-.94 1.164-.173.199-.347.223-.644.075-.297-.15-1.255-.463-2.39-1.475-.883-.788-1.48-1.761-1.653-2.059-.173-.297-.018-.458.13-.606.134-.133.298-.347.446-.52.149-.174.198-.298.298-.497.099-.198.05-.371-.025-.52-.075-.149-.669-1.612-.916-2.207-.242-.579-.487-.5-.669-.51-.173-.008-.371-.01-.57-.01-.198 0-.52.074-.792.372-.272.297-1.04 1.016-1.04 2.479 0 1.462 1.065 2.875 1.213 3.074.149.198 2.096 3.2 5.077 4.487.709.306 1.262.489 1.694.625.712.227 1.36.195 1.871.118.571-.085 1.758-.719 2.006-1.413.248-.694.248-1.289.173-1.413-.074-.124-.272-.198-.57-.347m-5.421 7.403h-.004a9.87 9.87 0 01-5.031-1.378l-.361-.214-3.741.982.998-3.648-.235-.374a9.86 9.86 0 01-1.51-5.26c.001-5.45 4.436-9.884 9.888-9.884 2.64 0 5.122 1.03 6.988 2.898a9.825 9.825 0 012.893 6.994c-.003 5.45-4.437 9.884-9.885 9.884m8.413-18.297A11.815 11.815 0 0012.05 0C5.495 0 .16 5.335.157 11.892c0 2.096.547 4.142 1.588 5.945L.057 24l6.305-1.654a11.882 11.882 0 005.683 1.448h.005c6.554 0 11.89-5.335 11.893-11.893a11.821 11.821 0 00-3.48-8.413z"/></svg>
+              </a>
+              <!-- YouTube -->
+              <a href="https://youtube.com" target="_blank" class="social-icon" aria-label="YouTube">
+                <svg width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round"><path d="M22.54 6.42a2.78 2.78 0 0 0-1.94-2C18.88 4 12 4 12 4s-6.88 0-8.6.42a2.78 2.78 0 0 0-1.94 2C1 8.14 1 12 1 12s0 3.86.42 5.58a2.78 2.78 0 0 0 1.94 2c1.71.42 8.6.42 8.6.42s6.88 0 8.6-.42a2.78 2.78 0 0 0 1.94-2C23 15.86 23 12 23 12s0-3.86-.42-5.58z"/><polygon points="9.75 15.02 15.5 12 9.75 8.98 9.75 15.02"/></svg>
+              </a>
+            </div>
+          </div>
+        </div>
+        
+        <!-- CENTER SECTION — QUICK LINKS -->
+        <div class="footer-nav">
+          <h4 class="footer-heading">Quick Links</h4>
+          <ul class="footer-list">
+            <li><a href="../index.html" class="footer-link">Home</a></li>
+            <li><a href="about.html" class="footer-link">About</a></li>
+            <li><a href="rooms.html" class="footer-link">Rooms & Suites</a></li>
+            <li><a href="booking.html" class="footer-link">Booking</a></li>
+            <li><a href="gallery.html" class="footer-link">Gallery</a></li>
+            <li><a href="contact.html" class="footer-link">Contact</a></li>
+            <li><a href="contact.html#faq" class="footer-link">FAQ</a></li>
+            <li><a href="sitemap.html" class="footer-link">Sitemap</a></li>
+          </ul>
+        </div>
+        
+        <!-- RIGHT SECTION — CONTACT -->
+        <div class="footer-contact">
+          <h4 class="footer-heading">Contact</h4>
+          <div class="footer-contact-info">
+            <a href="https://maps.google.com/?q=Elysium+Grand+Resort+Maldives" target="_blank" class="contact-item link">
+              <div class="contact-icon-small">
+                <svg width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.5"><path d="M20 10c0 6-8 12-8 12s-8-6-8-12a8 8 0 0 1 16 0Z"/><circle cx="12" cy="10" r="3"/></svg>
+              </div>
+              <p>Elysium Grand Resort<br>Ocean Breeze Avenue,<br>Maldives Luxury Coast</p>
+            </a>
+            
+            <a href="mailto:info@elysiumgrand.com" class="contact-item link">
+              <div class="contact-icon-small">
+                <svg width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.5"><rect width="20" height="16" x="2" y="4" rx="2"/><path d="m22 7-8.97 5.7a1.94 1.94 0 0 1-2.06 0L2 7"/></svg>
+              </div>
+              <p>info@elysiumgrand.com</p>
+            </a>
+            
+            <a href="tel:+919876543210" class="contact-item link">
+              <div class="contact-icon-small">
+                <svg width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.5"><path d="M22 16.92v3a2 2 0 0 1-2.18 2 19.79 19.79 0 0 1-8.63-3.07 19.5 19.5 0 0 1-6-6 19.79 19.79 0 0 1-3.07-8.67A2 2 0 0 1 4.11 2h3a2 2 0 0 1 2 1.72 12.84 12.84 0 0 0 .7 2.81 2 2 0 0 1-.45 2.11L8.09 9.91a16 16 0 0 0 6 6l1.27-1.27a2 2 0 0 1 2.11-.45 12.84 12.84 0 0 0 2.81.7A2 2 0 0 1 22 16.92z"/></svg>
+              </div>
+              <p>+91 98765 43210</p>
+            </a>
+            
+            <div class="contact-status">
+              <p>Available 24/7 for reservations</p>
+            </div>
+          </div>
+        </div>
+      </div>
+      
+      <!-- BOTTOM FOOTER BAR -->
+      <div class="footer-bottom">
+        <div class="footer-divider-luxury"></div>
+        <div class="footer-bottom-wrap">
+          <div class="copyright-left">
+            <p>&copy; <span id="current-year"></span> Elysium Grand Resort. All Rights Reserved.</p>
+          </div>
+          <div class="footer-bottom-links">
+            <a href="privacy-policy.html">Privacy Policy</a>
+            <a href="terms-conditions.html">Terms & Conditions</a>
+            <a href="contact.html#faq">FAQ</a>
+            <a href="404.html">404 Page</a>
+          </div>
+        </div>
+      </div>
+    </div>
+  </div>
+</footer>
+
+  
+  <!-- Scroll to Top -->
+  <button class="scroll-top" id="scroll-top" aria-label="Scroll to top">↑</button>
+
+  <script src="../js/main.js"></script>
+  <script>
+    document.addEventListener('DOMContentLoaded', () => {
+      /* Form Validation Logic */
+      const contactForm = document.getElementById('contact-form');
+      const successMsg = document.getElementById('form-success');
+
+      if (contactForm) {
+        contactForm.addEventListener('submit', (e) => {
+          e.preventDefault();
+          let valid = true;
+          
+          const requiredFields = contactForm.querySelectorAll('[required]');
+          requiredFields.forEach(field => {
+            const group = field.closest('.form-group');
+            if (!field.value.trim()) {
+              valid = false;
+              if (group) group.classList.add('error');
+            } else {
+              if (group) group.classList.remove('error');
+            }
+          });
+
+          const emailField = document.getElementById('email');
+          if (emailField && emailField.value) {
+            const emailRegex = /^[^\s@]+@[^\s@]+\.[^\s@]+$/;
+            if (!emailRegex.test(emailField.value)) {
+              valid = false;
+              emailField.closest('.form-group').classList.add('error');
+            }
+          }
+
+          if (valid) {
+            successMsg.style.display = 'block';
+            contactForm.reset();
+            // Scroll slightly up to see success message
+            successMsg.scrollIntoView({ behavior: 'smooth', block: 'center' });
+            
+            setTimeout(() => {
+              successMsg.style.display = 'none';
+            }, 5000);
+          }
+        });
+      }
+
+      /* FAQ Accordion handled by main.js */
+    });
+  </script>
+</body>
+</html>
+
+
+
+

@@ -1,0 +1,573 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <meta name="description" content="Explore our luxurious rooms, suites, and villas. Experience the pinnacle of 5-star hospitality.">
+  <title>Our Rooms | Elysium Grand Resort</title>
+  <link rel="stylesheet" href="../css/style.css">
+  <link rel="stylesheet" href="../css/animations.css">
+  <link rel="stylesheet" href="../css/responsive.css">
+  <style>
+    /* Rooms Page Specific Styles */
+    .filter-section {
+      background: var(--white);
+      padding: 2rem;
+      border-radius: var(--radius-sm);
+      box-shadow: var(--shadow-sm);
+      margin-top: -60px;
+      position: relative;
+      z-index: 10;
+      margin-bottom: 4rem;
+    }
+
+    .filter-grid {
+      display: grid;
+      grid-template-columns: 1fr 2fr 1fr;
+      gap: 2rem;
+      align-items: center;
+    }
+
+    .filter-categories {
+      display: flex;
+      gap: 1rem;
+      flex-wrap: wrap;
+    }
+
+    .room-filter-btn {
+      padding: 0.5rem 1.5rem;
+      border: 1px solid rgba(0,0,0,0.1);
+      border-radius: var(--radius-pill);
+      background: transparent;
+      font-size: 0.8rem;
+      text-transform: uppercase;
+      letter-spacing: 1px;
+      cursor: pointer;
+      transition: all var(--transition-fast);
+    }
+
+    .room-filter-btn:hover,
+    .room-filter-btn.active {
+      background: var(--navy);
+      color: var(--gold);
+      border-color: var(--navy);
+    }
+
+    .search-wrapper {
+      position: relative;
+    }
+
+    .search-wrapper input {
+      width: 100%;
+      padding: 0.75rem 1rem 0.75rem 2.5rem;
+      border: 1px solid rgba(0,0,0,0.1);
+      border-radius: var(--radius-sm);
+      font-size: 0.9rem;
+    }
+
+    .search-wrapper::before {
+      content: '';
+      position: absolute;
+      left: 15px;
+      top: 50%;
+      transform: translateY(-50%);
+      width: 16px;
+      height: 16px;
+      background: url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' width='24' height='24' viewBox='0 0 24 24' fill='none' stroke='currentColor' stroke-width='2' stroke-linecap='round' stroke-linejoin='round'%3E%3Ccircle cx='11' cy='11' r='8'%3E%3C/circle%3E%3Cline x1='21' y1='21' x2='16.65' y2='16.65'%3E%3C/line%3E%3C/svg%3E") no-repeat center/contain;
+      opacity: 0.5;
+      z-index: 2;
+    }
+
+    .sort-wrapper select {
+      width: 100%;
+      padding: 0.75rem 1rem;
+      border: 1px solid rgba(0,0,0,0.1);
+      border-radius: var(--radius-sm);
+      font-size: 0.9rem;
+      cursor: pointer;
+    }
+
+    @media (max-width: 992px) {
+      .filter-grid {
+        grid-template-columns: 1fr;
+      }
+      /* Special Packages: 2-col → 1-col */
+      .section-beige .grid[style*="repeat(2, 1fr)"],
+      .section .grid[style*="repeat(2, 1fr)"],
+      .section-dark .grid[style*="repeat(3, 1fr)"] {
+        grid-template-columns: 1fr !important;
+        gap: 2rem !important;
+      }
+    }
+    @media (max-width: 768px) {
+      /* Package cards — reduce height */
+      .section-beige .grid > .premium-card {
+        height: 280px !important;
+      }
+      /* Reviews grid collapse */
+      .section-dark .grid[style*="repeat(3"] {
+        grid-template-columns: 1fr !important;
+        max-width: 540px;
+        margin-left: auto;
+        margin-right: auto;
+      }
+    }
+    @media (max-width: 576px) {
+      .section-beige .grid > .premium-card {
+        height: 240px !important;
+      }
+      .section-beige .grid > .premium-card h3 {
+        font-size: 1.5rem !important;
+      }
+      .section-beige .grid > .premium-card p {
+        font-size: 0.85rem !important;
+        margin-bottom: 1rem !important;
+      }
+      .filter-section {
+        padding: 1.25rem;
+        margin-top: -30px;
+      }
+      .sort-wrapper select,
+      .search-wrapper input {
+        font-size: 0.8rem;
+        padding: 0.6rem 1rem;
+      }
+      .search-wrapper input {
+        padding-left: 2.5rem;
+      }
+    }
+  </style>
+</head>
+<body>
+  <!-- Preloader -->
+  <div class="preloader" id="preloader">
+    <div class="preloader-inner">
+      <div class="logo">Elysium Grand</div>
+      <div class="preloader-bar"></div>
+    </div>
+  </div>
+
+  <!-- Navbar Placeholder -->
+  <!-- ===== NAVBAR COMPONENT ===== -->
+<nav class="navbar" id="main-navbar">
+  <div class="container">
+    <a href="../index.html" class="logo">Elysium <span>Grand</span></a>
+
+    <div class="nav-overlay" id="nav-overlay"></div>
+
+    <ul class="nav-menu" id="nav-menu">
+      <li><a href="../index.html" class="link-underline">Home</a></li>
+      <li><a href="about.html" class="link-underline">About</a></li>
+      <li><a href="rooms.html" class="active">Rooms</a></li>
+      <li><a href="booking.html" class="link-underline">Booking</a></li>
+      <li><a href="gallery.html" class="link-underline">Gallery</a></li>
+      <li><a href="contact.html" class="link-underline">Contact</a></li>
+    </ul>
+
+    <button class="hamburger" id="hamburger" aria-label="Toggle menu">
+      <span></span>
+      <span></span>
+      <span></span>
+    </button>
+  </div>
+</nav>
+
+
+  <!-- Page Hero -->
+  <section class="page-hero">
+    <div class="container">
+      <h1 class="animate-fade-up">Our Accommodations</h1>
+      <p class="animate-fade-up delay-2">Discover your perfect sanctuary.</p>
+      <div class="breadcrumb animate-fade-up delay-3">
+        <a href="../index.html">Home</a><span>/</span><span>Rooms</span>
+      </div>
+    </div>
+  </section>
+
+  <!-- Main Rooms Section -->
+  <section class="section section-beige" style="padding-top: 0;">
+    <div class="container">
+      
+      <!-- Filter & Search Bar -->
+      <div class="filter-section scroll-animate">
+        <div class="filter-grid">
+          <!-- Search -->
+          <div class="search-wrapper">
+            <input type="text" id="roomSearch" placeholder="Search rooms...">
+          </div>
+          
+          <!-- Categories -->
+          <div class="filter-categories" style="justify-content: center;">
+            <button class="room-filter-btn active" data-filter="all">All</button>
+            <button class="room-filter-btn" data-filter="room">Rooms</button>
+            <button class="room-filter-btn" data-filter="suite">Suites</button>
+            <button class="room-filter-btn" data-filter="villa">Villas</button>
+          </div>
+          
+          <!-- Sort -->
+          <div class="sort-wrapper">
+            <select id="roomSort" onchange="window.sortRooms(this.value)">
+              <option value="">Sort By</option>
+              <option value="price-low">Price: Low to High</option>
+              <option value="price-high">Price: High to Low</option>
+              <option value="name">Name: A-Z</option>
+            </select>
+          </div>
+        </div>
+      </div>
+
+      <!-- Rooms Grid -->
+      <div class="rooms-grid" id="roomsContainer">
+        
+        <!-- Deluxe Room -->
+        <div class="premium-card room-card scroll-animate" data-category="room" data-price="299" data-name="Deluxe Room">
+          <div class="room-card-image img-zoom">
+            <img src="../assets/rooms/room-1.jpg" alt="Deluxe Room">
+          </div>
+          <div class="room-card-content">
+            <h3>Deluxe Room</h3>
+            <div style="color: var(--gold); margin-bottom: 0.5rem; font-size: 0.9rem; letter-spacing: 2px;">★★★★★</div>
+            <p>Elegant design meets unparalleled comfort. Enjoy partial ocean views from your private balcony.</p>
+            <div class="room-amenities">
+              <span class="room-amenity"><svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" style="margin-right: 5px;"><path d="M2 20h20"/><path d="M2 14v6"/><path d="M22 14v6"/><path d="M5 18v-4a2 2 0 0 1 2-2h10a2 2 0 0 1 2 2v4"/><path d="M2 8h20"/><path d="M5 8v6"/><path d="M19 8v6"/><path d="M10 8V4a2 2 0 0 1 2-2h0a2 2 0 0 1 2 2v4"/></svg> King Bed</span>
+              <span class="room-amenity"><svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" style="margin-right: 5px;"><path d="M5 12.55a11 11 0 0 1 14.08 0"/><path d="M1.42 9a16 16 0 0 1 21.16 0"/><path d="M8.53 16.11a6 6 0 0 1 6.95 0"/><line x1="12" y1="20" x2="12.01" y2="20"/></svg> WiFi</span>
+              <span class="room-amenity"><svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" style="margin-right: 5px;"><path d="M17 8h1a4 4 0 1 1 0 8h-1"/><path d="M3 8h14v9a4 4 0 0 1-4 4H7a4 4 0 0 1-4-4Z"/><line x1="6" y1="2" x2="6" y2="4"/><line x1="10" y1="2" x2="10" y2="4"/><line x1="14" y1="2" x2="14" y2="4"/></svg> Minibar</span>
+            </div>
+            <div class="room-card-footer">
+              <div class="room-card-price">₹299 <span>/ night</span></div>
+              <div style="display:flex; gap:10px;">
+                <a href="room-details.html" class="btn btn-outline" style="padding: 0.5rem 1rem; font-size: 0.7rem; white-space: nowrap;">Details</a>
+                <a href="booking.html" class="btn btn-primary btn-sweep" style="padding: 0.5rem 1rem; font-size: 0.7rem; white-space: nowrap;">Book</a>
+              </div>
+            </div>
+          </div>
+        </div>
+
+        <!-- Luxury Suite -->
+        <div class="premium-card room-card scroll-animate delay-2" data-category="suite" data-price="549" data-name="Luxury Suite">
+          <div class="room-card-image img-zoom">
+            <img src="../assets/rooms/room-2.jpg" alt="Luxury Suite">
+            <span class="room-card-badge">Popular</span>
+          </div>
+          <div class="room-card-content">
+            <h3>Luxury Suite</h3>
+            <div style="color: var(--gold); margin-bottom: 0.5rem; font-size: 0.9rem; letter-spacing: 2px;">★★★★★</div>
+            <p>Spacious living areas and breathtaking panoramic oceanfront views with premium furnishings.</p>
+            <div class="room-amenities">
+              <span class="room-amenity"><svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" style="margin-right: 5px;"><path d="M2 6c.6.5 1.2 1 2.5 1C5.8 7 6.5 6 8 6c1.5 0 2.2 1 3.5 1s2.2-1 3.5-1 2.2 1 3.5 1 2.2 1 3.5 1 2.9-.5 3.5-1"/><path d="M2 12c.6.5 1.2 1 2.5 1 1.3 0 2-1 3.5-1 1.5 0 2.2 1 3.5 1s2.2-1 3.5-1 2.2 1 3.5 1 2.9-.5 3.5-1"/><path d="M2 18c.6.5 1.2 1 2.5 1 1.3 0 2-1 3.5-1 1.5 0 2.2 1 3.5 1s2.2-1 3.5-1 2.2 1 3.5 1 2.9-.5 3.5-1"/></svg> Ocean View</span>
+              <span class="room-amenity"><svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" style="margin-right: 5px;"><path d="M20 9V6a2 2 0 0 0-2-2H6a2 2 0 0 0-2 2v3"/><rect x="2" y="9" width="20" height="8" rx="2"/><path d="M4 17v2"/><path d="M20 17v2"/></svg> Lounge</span>
+              <span class="room-amenity"><svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" style="margin-right: 5px;"><path d="M9 6 6.5 3.5a1.5 1.5 0 0 0-1-1C4.6 2.4 4 3 4 3.8V17a2 2 0 0 0 2 2h12a2 2 0 0 0 2-2V8"/><path d="M10 11h.01"/><path d="M14 11h.01"/><path d="M18 11h.01"/><path d="M6 11h.01"/></svg> Jacuzzi</span>
+            </div>
+            <div class="room-card-footer">
+              <div class="room-card-price">₹549 <span>/ night</span></div>
+              <div style="display:flex; gap:10px;">
+                <a href="room-details.html" class="btn btn-outline" style="padding: 0.5rem 1rem; font-size: 0.7rem; white-space: nowrap;">Details</a>
+                <a href="booking.html" class="btn btn-primary btn-sweep" style="padding: 0.5rem 1rem; font-size: 0.7rem; white-space: nowrap;">Book</a>
+              </div>
+            </div>
+          </div>
+        </div>
+
+        <!-- Family Room -->
+        <div class="premium-card room-card scroll-animate delay-4" data-category="room" data-price="450" data-name="Family Room">
+          <div class="room-card-image img-zoom">
+            <img src="../assets/rooms/room-3.jpg" alt="Family Room">
+          </div>
+          <div class="room-card-content">
+            <h3>Family Room</h3>
+            <div style="color: var(--gold); margin-bottom: 0.5rem; font-size: 0.9rem; letter-spacing: 2px;">★★★★☆</div>
+            <p>Generous space designed perfectly for family comfort, complete with entertainment options.</p>
+            <div class="room-amenities">
+              <span class="room-amenity"><svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" style="margin-right: 5px;"><rect x="2" y="7" width="20" height="14" rx="2" ry="2"/><path d="M8 21V5a2 2 0 0 1 2-2h4a2 2 0 0 1 2 2v16"/></svg> 2 Queens</span>
+              <span class="room-amenity"><svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" style="margin-right: 5px;"><rect x="2" y="3" width="20" height="14" rx="2" ry="2"/><line x1="8" y1="21" x2="16" y2="21"/><line x1="12" y1="17" x2="12" y2="21"/></svg> Smart TV</span>
+              <span class="room-amenity"><svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" style="margin-right: 5px;"><line x1="6" y1="12" x2="10" y2="12"/><line x1="8" y1="10" x2="8" y2="14"/><line x1="15" y1="13" x2="15" y2="13"/><line x1="18" y1="11" x2="18" y2="11"/><rect x="2" y="6" width="20" height="12" rx="2"/></svg> Play Area</span>
+            </div>
+            <div class="room-card-footer">
+              <div class="room-card-price">₹450 <span>/ night</span></div>
+              <div style="display:flex; gap:10px;">
+                <a href="room-details.html" class="btn btn-outline" style="padding: 0.5rem 1rem; font-size: 0.7rem; white-space: nowrap;">Details</a>
+                <a href="booking.html" class="btn btn-primary btn-sweep" style="padding: 0.5rem 1rem; font-size: 0.7rem; white-space: nowrap;">Book</a>
+              </div>
+            </div>
+          </div>
+        </div>
+
+        <!-- Beach Villa -->
+        <div class="premium-card room-card scroll-animate" data-category="villa" data-price="1200" data-name="Beach Villa">
+          <div class="room-card-image img-zoom">
+            <img src="../assets/rooms/room-2.jpg" alt="Beach Villa">
+            <span class="room-card-badge">Premium</span>
+          </div>
+          <div class="room-card-content">
+            <h3>Beach Villa</h3>
+            <div style="color: var(--gold); margin-bottom: 0.5rem; font-size: 0.9rem; letter-spacing: 2px;">★★★★★</div>
+            <p>Direct beach access with a private infinity pool, lush garden, and dedicated butler service.</p>
+            <div class="room-amenities">
+              <span class="room-amenity"><svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" style="margin-right: 5px;"><circle cx="12" cy="12" r="10"/><path d="M14.89 11.39 12 14.28 9.11 11.39"/><path d="m14.89 12.61-2.89 2.89-2.89-2.89"/><path d="M12 14.28V10"/></svg> Pool</span>
+              <span class="room-amenity"><svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" style="margin-right: 5px;"><path d="M12 10a4 4 0 0 0-4 4c0 3 4 7 4 7s4-4 4-7a4 4 0 0 0-4-4Z"/><path d="m9 14 3 3 3-3"/></svg> Beach Access</span>
+              <span class="room-amenity"><svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" style="margin-right: 5px;"><path d="M19 21v-2a4 4 0 0 0-4-4H9a4 4 0 0 0-4 4v2"/><circle cx="12" cy="7" r="4"/></svg> Butler</span>
+            </div>
+            <div class="room-card-footer">
+              <div class="room-card-price">₹1,200 <span>/ night</span></div>
+              <div style="display:flex; gap:10px;">
+                <a href="room-details.html" class="btn btn-outline" style="padding: 0.5rem 1rem; font-size: 0.7rem; white-space: nowrap;">Details</a>
+                <a href="booking.html" class="btn btn-primary btn-sweep" style="padding: 0.5rem 1rem; font-size: 0.7rem; white-space: nowrap;">Book</a>
+              </div>
+            </div>
+          </div>
+        </div>
+
+        <!-- Honeymoon Suite -->
+        <div class="premium-card room-card scroll-animate delay-2" data-category="suite" data-price="899" data-name="Honeymoon Suite">
+          <div class="room-card-image img-zoom">
+            <img src="../assets/rooms/room-1.jpg" alt="Honeymoon Suite">
+            <span class="room-card-badge">Romantic</span>
+          </div>
+          <div class="room-card-content">
+            <h3>Honeymoon Suite</h3>
+            <div style="color: var(--gold); margin-bottom: 0.5rem; font-size: 0.9rem; letter-spacing: 2px;">★★★★★</div>
+            <p>A secluded, romantic sanctuary featuring sunset views, wine fridge, and couples spa access.</p>
+            <div class="room-amenities">
+              <span class="room-amenity"><svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" style="margin-right: 5px;"><path d="M12 2a10 10 0 1 0 10 10 10 10 0 0 0-10-10zm0 18a8 8 0 1 1 8-8 8 8 0 0 1-8 8z"/><path d="M12 6v6l4 2"/></svg> Sunset View</span>
+              <span class="room-amenity"><svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" style="margin-right: 5px;"><path d="M11 20a4 4 0 0 1-8 0c0-4.8 8-11 8-11s8 6.2 8 11a4 4 0 0 1-8 0Z"/><circle cx="11" cy="20" r="1"/></svg> Wine Fridge</span>
+              <span class="room-amenity"><svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" style="margin-right: 5px;"><path d="M19 14c1.49-1.46 3-3.21 3-5.5A5.5 5.5 0 0 0 16.5 3c-1.76 0-3 .5-4.5 2-1.5-1.5-2.74-2-4.5-2A5.5 5.5 0 0 0 2 8.5c0 2.3 1.5 4.05 3 5.5l7 7Z"/></svg> Romantic Setup</span>
+            </div>
+            <div class="room-card-footer">
+              <div class="room-card-price">₹899 <span>/ night</span></div>
+              <div style="display:flex; gap:10px;">
+                <a href="room-details.html" class="btn btn-outline" style="padding: 0.5rem 1rem; font-size: 0.7rem; white-space: nowrap;">Details</a>
+                <a href="booking.html" class="btn btn-primary btn-sweep" style="padding: 0.5rem 1rem; font-size: 0.7rem; white-space: nowrap;">Book</a>
+              </div>
+            </div>
+          </div>
+        </div>
+
+      </div>
+    </div>
+  </section>
+
+  <!-- 4. Amenities Included -->
+  <section class="section">
+    <div class="container">
+      <div class="section-header scroll-animate">
+        <span class="section-label">Complimentary</span>
+        <h2 class="section-title">Included With Every Stay</h2>
+        <div class="section-divider"></div>
+      </div>
+      <div class="features-grid">
+        <div class="feature-card scroll-animate">
+          <div class="feature-icon">
+            <svg width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M17 8h1a4 4 0 1 1 0 8h-1"/><path d="M3 8h14v9a4 4 0 0 1-4 4H7a4 4 0 0 1-4-4Z"/><line x1="6" y1="2" x2="6" y2="4"/><line x1="10" y1="2" x2="10" y2="4"/><line x1="14" y1="2" x2="14" y2="4"/></svg>
+          </div>
+          <h3>Gourmet Breakfast</h3>
+          <p>Daily à la carte breakfast at our signature oceanfront restaurant.</p>
+        </div>
+        <div class="feature-card scroll-animate delay-2">
+          <div class="feature-icon">
+            <svg width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M5 12.55a11 11 0 0 1 14.08 0"/><path d="M1.42 9a16 16 0 0 1 21.16 0"/><path d="M8.53 16.11a6 6 0 0 1 6.95 0"/><line x1="12" y1="20" x2="12.01" y2="20"/></svg>
+          </div>
+          <h3>High-Speed WiFi</h3>
+          <p>Seamless connectivity throughout the resort and on the beach.</p>
+        </div>
+        <div class="feature-card scroll-animate delay-4">
+          <div class="feature-icon">
+            <svg width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M11 20A7 7 0 0 1 9.8 6.1C15.5 5 17 4.48 19 2c1 2 2 3 2 4h-2c-2 10-5 12.25-8 14Z"/><path d="M11 20c-4-3-1.5-12 1-14"/><path d="m7 21-4-4"/><path d="m14 21-4-4"/></svg>
+          </div>
+          <h3>Luxury Toiletries</h3>
+          <p>Exclusive boutique bath and body products replenished daily.</p>
+        </div>
+        <div class="feature-card scroll-animate delay-6">
+          <div class="feature-icon">
+            <svg width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M19 21v-2a4 4 0 0 0-4-4H9a4 4 0 0 0-4 4v2"/><circle cx="12" cy="7" r="4"/></svg>
+          </div>
+          <h3>24/7 Concierge</h3>
+          <p>Dedicated assistance for all your excursion and dining needs.</p>
+        </div>
+      </div>
+    </div>
+  </section>
+
+  <!-- 5. Special Packages -->
+  <section class="section section-beige">
+    <div class="container">
+      <div class="section-header scroll-animate">
+        <span class="section-label">Elevate Your Stay</span>
+        <h2 class="section-title">Room Packages</h2>
+        <div class="section-divider"></div>
+      </div>
+      <div class="grid" style="grid-template-columns: repeat(2, 1fr); gap: 3rem;">
+        <div class="premium-card scroll-animate img-zoom" style="position: relative; height: 350px; display: flex; align-items: center; justify-content: center; text-align: center;">
+          <img src="../assets/gallery/gallery-2.jpg" alt="Honeymoon Package" style="position: absolute; inset: 0; width: 100%; height: 100%; object-fit: cover; z-index: 0;">
+          <div style="position: absolute; inset: 0; background: rgba(11,29,38,0.7); z-index: 1;"></div>
+          <div style="position: relative; z-index: 2; padding: 2rem; color: var(--white);">
+            <h3 style="font-family: var(--font-hero); font-size: 2.5rem; margin-bottom: 1rem; color: var(--white);">Romance Package</h3>
+            <p style="margin-bottom: 1.5rem; color: rgba(255,255,255,0.8);">Add champagne on arrival, a couples massage, and a private beach dinner.</p>
+            <a href="booking.html" class="btn btn-outline" style="color: var(--gold); border-color: var(--gold);">Add to Booking</a>
+          </div>
+        </div>
+        <div class="premium-card scroll-animate delay-2 img-zoom" style="position: relative; height: 350px; display: flex; align-items: center; justify-content: center; text-align: center;">
+          <img src="../assets/gallery/gallery-1.jpg" alt="Wellness Package" style="position: absolute; inset: 0; width: 100%; height: 100%; object-fit: cover; z-index: 0;">
+          <div style="position: absolute; inset: 0; background: rgba(11,29,38,0.7); z-index: 1;"></div>
+          <div style="position: relative; z-index: 2; padding: 2rem; color: var(--white);">
+            <h3 style="font-family: var(--font-hero); font-size: 2.5rem; margin-bottom: 1rem; color: var(--white);">Wellness Retreat</h3>
+            <p style="margin-bottom: 1.5rem; color: rgba(255,255,255,0.8);">Includes daily spa access, private yoga sessions, and detox dining.</p>
+            <a href="booking.html" class="btn btn-outline" style="color: var(--gold); border-color: var(--gold);">Add to Booking</a>
+          </div>
+        </div>
+      </div>
+    </div>
+  </section>
+
+  <!-- 6. Customer Reviews -->
+  <section class="section section-dark">
+    <div class="container">
+      <div class="section-header scroll-animate">
+        <span class="section-label">Guest Feedback</span>
+        <h2 class="section-title">What Our Guests Say</h2>
+        <div class="section-divider"></div>
+      </div>
+      <div class="grid" style="grid-template-columns: repeat(3, 1fr); gap: 2rem;">
+        <div class="glass-card scroll-animate" style="padding: 2rem;">
+          <div style="color: var(--gold); margin-bottom: 1rem; letter-spacing: 2px;">★★★★★</div>
+          <p style="font-style: italic; margin-bottom: 1.5rem;">"The Beach Villa was breathtaking. Waking up to the sound of the ocean was a dream."</p>
+          <h4 style="font-family: var(--font-body); font-size: 0.9rem; text-transform: uppercase;">- Sarah J.</h4>
+        </div>
+        <div class="glass-card scroll-animate delay-2" style="padding: 2rem;">
+          <div style="color: var(--gold); margin-bottom: 1rem; letter-spacing: 2px;">★★★★★</div>
+          <p style="font-style: italic; margin-bottom: 1.5rem;">"Our Luxury Suite was immaculate. The private jacuzzi and lounge were perfect."</p>
+          <h4 style="font-family: var(--font-body); font-size: 0.9rem; text-transform: uppercase;">- Michael T.</h4>
+        </div>
+        <div class="glass-card scroll-animate delay-4" style="padding: 2rem;">
+          <div style="color: var(--gold); margin-bottom: 1rem; letter-spacing: 2px;">★★★★★</div>
+          <p style="font-style: italic; margin-bottom: 1.5rem;">"The Family Room gave us the perfect amount of space. Highly recommend!"</p>
+          <h4 style="font-family: var(--font-body); font-size: 0.9rem; text-transform: uppercase;">- The Davis Family</h4>
+        </div>
+      </div>
+    </div>
+  </section>
+
+  <!-- 7. Booking CTA Banner -->
+  <section class="cta-section" style="background: var(--navy-light); text-align: center; padding: 6rem 0;">
+    <div class="container scroll-animate">
+      <h2 style="font-family: var(--font-hero); font-size: 3rem; color: var(--gold); margin-bottom: 1.5rem;">Ready to Escape?</h2>
+      <p style="color: var(--white); font-size: 1.1rem; margin-bottom: 3rem; max-width: 600px; margin-left: auto; margin-right: auto;">Secure your dates now to guarantee availability in your preferred suite or villa.</p>
+      <a href="booking.html" class="btn btn-primary btn-sweep btn-lg">Check Availability</a>
+    </div>
+  </section>
+
+  <!-- Footer Placeholder -->
+  <!-- ===== PROFESSIONAL LUXURY FOOTER COMPONENT ===== -->
+<footer class="footer">
+  <div class="footer-glass">
+    <div class="container">
+      <div class="footer-top">
+        
+        <!-- LEFT SECTION — BRAND IDENTITY -->
+        <div class="footer-brand">
+          <a href="../index.html" class="footer-logo-link">
+            <h2 class="footer-logo">Elysium <span>Grand</span></h2>
+          </a>
+          <p class="footer-description">
+            “Experience unparalleled luxury at Elysium Grand Resort. Where timeless elegance meets modern comfort on the pristine shores of paradise. Discover your ultimate getaway.”
+          </p>
+          
+          <div class="footer-social-section">
+            <div class="footer-social">
+              <!-- Instagram -->
+              <a href="https://instagram.com" target="_blank" class="social-icon" aria-label="Instagram">
+                <svg width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round"><rect x="2" y="2" width="20" height="20" rx="5" ry="5"/><path d="M16 11.37A4 4 0 1 1 12.63 8 4 4 0 0 1 16 11.37z"/><line x1="17.5" y1="6.5" x2="17.51" y2="6.5"/></svg>
+              </a>
+              <!-- Facebook -->
+              <a href="https://facebook.com" target="_blank" class="social-icon" aria-label="Facebook">
+                <svg width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round"><path d="M18 2h-3a5 5 0 0 0-5 5v3H7v4h3v8h4v-8h3l1-4h-4V7a1 1 0 0 1 1-1h3z"/></svg>
+              </a>
+              <!-- WhatsApp -->
+              <a href="https://wa.me/1234567890" target="_blank" class="social-icon" aria-label="WhatsApp">
+                <svg width="18" height="18" viewBox="0 0 24 24" fill="currentColor"><path d="M17.472 14.382c-.297-.149-1.758-.867-2.03-.967-.273-.099-.471-.148-.67.15-.197.297-.767.966-.94 1.164-.173.199-.347.223-.644.075-.297-.15-1.255-.463-2.39-1.475-.883-.788-1.48-1.761-1.653-2.059-.173-.297-.018-.458.13-.606.134-.133.298-.347.446-.52.149-.174.198-.298.298-.497.099-.198.05-.371-.025-.52-.075-.149-.669-1.612-.916-2.207-.242-.579-.487-.5-.669-.51-.173-.008-.371-.01-.57-.01-.198 0-.52.074-.792.372-.272.297-1.04 1.016-1.04 2.479 0 1.462 1.065 2.875 1.213 3.074.149.198 2.096 3.2 5.077 4.487.709.306 1.262.489 1.694.625.712.227 1.36.195 1.871.118.571-.085 1.758-.719 2.006-1.413.248-.694.248-1.289.173-1.413-.074-.124-.272-.198-.57-.347m-5.421 7.403h-.004a9.87 9.87 0 01-5.031-1.378l-.361-.214-3.741.982.998-3.648-.235-.374a9.86 9.86 0 01-1.51-5.26c.001-5.45 4.436-9.884 9.888-9.884 2.64 0 5.122 1.03 6.988 2.898a9.825 9.825 0 012.893 6.994c-.003 5.45-4.437 9.884-9.885 9.884m8.413-18.297A11.815 11.815 0 0012.05 0C5.495 0 .16 5.335.157 11.892c0 2.096.547 4.142 1.588 5.945L.057 24l6.305-1.654a11.882 11.882 0 005.683 1.448h.005c6.554 0 11.89-5.335 11.893-11.893a11.821 11.821 0 00-3.48-8.413z"/></svg>
+              </a>
+              <!-- YouTube -->
+              <a href="https://youtube.com" target="_blank" class="social-icon" aria-label="YouTube">
+                <svg width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round"><path d="M22.54 6.42a2.78 2.78 0 0 0-1.94-2C18.88 4 12 4 12 4s-6.88 0-8.6.42a2.78 2.78 0 0 0-1.94 2C1 8.14 1 12 1 12s0 3.86.42 5.58a2.78 2.78 0 0 0 1.94 2c1.71.42 8.6.42 8.6.42s6.88 0 8.6-.42a2.78 2.78 0 0 0 1.94-2C23 15.86 23 12 23 12s0-3.86-.42-5.58z"/><polygon points="9.75 15.02 15.5 12 9.75 8.98 9.75 15.02"/></svg>
+              </a>
+            </div>
+          </div>
+        </div>
+        
+        <!-- CENTER SECTION — QUICK LINKS -->
+        <div class="footer-nav">
+          <h4 class="footer-heading">Quick Links</h4>
+          <ul class="footer-list">
+            <li><a href="../index.html" class="footer-link">Home</a></li>
+            <li><a href="about.html" class="footer-link">About</a></li>
+            <li><a href="rooms.html" class="footer-link">Rooms & Suites</a></li>
+            <li><a href="booking.html" class="footer-link">Booking</a></li>
+            <li><a href="gallery.html" class="footer-link">Gallery</a></li>
+            <li><a href="contact.html" class="footer-link">Contact</a></li>
+            <li><a href="contact.html#faq" class="footer-link">FAQ</a></li>
+            <li><a href="sitemap.html" class="footer-link">Sitemap</a></li>
+          </ul>
+        </div>
+        
+        <!-- RIGHT SECTION — CONTACT -->
+        <div class="footer-contact">
+          <h4 class="footer-heading">Contact</h4>
+          <div class="footer-contact-info">
+            <a href="https://maps.google.com/?q=Elysium+Grand+Resort+Maldives" target="_blank" class="contact-item link">
+              <div class="contact-icon-small">
+                <svg width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.5"><path d="M20 10c0 6-8 12-8 12s-8-6-8-12a8 8 0 0 1 16 0Z"/><circle cx="12" cy="10" r="3"/></svg>
+              </div>
+              <p>Elysium Grand Resort<br>Ocean Breeze Avenue,<br>Maldives Luxury Coast</p>
+            </a>
+            
+            <a href="mailto:info@elysiumgrand.com" class="contact-item link">
+              <div class="contact-icon-small">
+                <svg width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.5"><rect width="20" height="16" x="2" y="4" rx="2"/><path d="m22 7-8.97 5.7a1.94 1.94 0 0 1-2.06 0L2 7"/></svg>
+              </div>
+              <p>info@elysiumgrand.com</p>
+            </a>
+            
+            <a href="tel:+919876543210" class="contact-item link">
+              <div class="contact-icon-small">
+                <svg width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.5"><path d="M22 16.92v3a2 2 0 0 1-2.18 2 19.79 19.79 0 0 1-8.63-3.07 19.5 19.5 0 0 1-6-6 19.79 19.79 0 0 1-3.07-8.67A2 2 0 0 1 4.11 2h3a2 2 0 0 1 2 1.72 12.84 12.84 0 0 0 .7 2.81 2 2 0 0 1-.45 2.11L8.09 9.91a16 16 0 0 0 6 6l1.27-1.27a2 2 0 0 1 2.11-.45 12.84 12.84 0 0 0 2.81.7A2 2 0 0 1 22 16.92z"/></svg>
+              </div>
+              <p>+91 98765 43210</p>
+            </a>
+            
+            <div class="contact-status">
+              <p>Available 24/7 for reservations</p>
+            </div>
+          </div>
+        </div>
+      </div>
+      
+      <!-- BOTTOM FOOTER BAR -->
+      <div class="footer-bottom">
+        <div class="footer-divider-luxury"></div>
+        <div class="footer-bottom-wrap">
+          <div class="copyright-left">
+            <p>&copy; <span id="current-year"></span> Elysium Grand Resort. All Rights Reserved.</p>
+          </div>
+          <div class="footer-bottom-links">
+            <a href="privacy-policy.html">Privacy Policy</a>
+            <a href="terms-conditions.html">Terms & Conditions</a>
+            <a href="contact.html#faq">FAQ</a>
+            <a href="404.html">404 Page</a>
+          </div>
+        </div>
+      </div>
+    </div>
+  </div>
+</footer>
+
+
+  <!-- Scroll to Top -->
+  <button class="scroll-top" id="scroll-top" aria-label="Scroll to top">↑</button>
+
+  <script src="../js/main.js"></script>
+  <script src="../js/filter.js"></script>
+</body>
+</html>
+
+
+
+

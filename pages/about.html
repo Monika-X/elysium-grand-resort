@@ -1,0 +1,627 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <meta name="description" content="Learn about the history, mission, and exceptional team behind Elysium Grand Resort.">
+  <title>About Us | Elysium Grand Resort</title>
+  <link rel="stylesheet" href="../css/style.css">
+  <link rel="stylesheet" href="../css/animations.css">
+  <link rel="stylesheet" href="../css/responsive.css">
+  <style>
+    /* Specific About Page Styles */
+    
+    /* Timeline Section */
+    .timeline-container {
+      position: relative;
+      max-width: 800px;
+      margin: 0 auto;
+      padding: 2rem 0;
+    }
+    
+    .timeline-container::before {
+      content: '';
+      position: absolute;
+      top: 0;
+      left: 50%;
+      transform: translateX(-50%);
+      width: 2px;
+      height: 100%;
+      background: var(--gold-light);
+    }
+
+    .timeline-item {
+      position: relative;
+      margin-bottom: 4rem;
+      width: 50%;
+      padding-right: 40px;
+    }
+    
+    .timeline-item:nth-child(even) {
+      margin-left: 50%;
+      padding-right: 0;
+      padding-left: 40px;
+    }
+
+    .timeline-dot {
+      position: absolute;
+      top: 0;
+      right: -8px;
+      width: 16px;
+      height: 16px;
+      background: var(--gold);
+      border-radius: 50%;
+      box-shadow: 0 0 0 4px rgba(212, 175, 55, 0.2);
+      transition: transform var(--transition-smooth);
+    }
+    
+    .timeline-item:nth-child(even) .timeline-dot {
+      right: auto;
+      left: -8px;
+    }
+    
+    .timeline-item:hover .timeline-dot {
+      transform: scale(1.5);
+    }
+
+    .timeline-content {
+      background: var(--white);
+      padding: 2rem;
+      border-radius: var(--radius-sm);
+      box-shadow: var(--shadow-sm);
+      position: relative;
+      transition: transform var(--transition-smooth), box-shadow var(--transition-smooth);
+    }
+    
+    .timeline-item:hover .timeline-content {
+      transform: translateY(-5px);
+      box-shadow: var(--shadow-md);
+    }
+
+    .timeline-year {
+      font-family: var(--font-hero);
+      color: var(--gold);
+      font-size: 1.5rem;
+      margin-bottom: 0.5rem;
+    }
+
+    /* Video Banner */
+    .video-banner {
+      position: relative;
+      height: 60vh;
+      min-height: 400px;
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      background: url('../assets/gallery/gallery-2.jpg') center/cover fixed;
+      color: var(--white);
+      text-align: center;
+    }
+    
+    .video-banner::before {
+      content: '';
+      position: absolute;
+      inset: 0;
+      background: rgba(11,29,38,0.6);
+    }
+    
+    .play-btn {
+      width: 80px;
+      height: 80px;
+      background: rgba(255,255,255,0.1);
+      border: 1px solid var(--gold);
+      border-radius: 50%;
+      display: inline-flex;
+      align-items: center;
+      justify-content: center;
+      cursor: pointer;
+      backdrop-filter: blur(4px);
+      transition: all var(--transition-smooth);
+      position: relative;
+      z-index: 2;
+    }
+    
+    .play-btn::after {
+      content: '';
+      display: block;
+      width: 0;
+      height: 0;
+      border-style: solid;
+      border-width: 12px 0 12px 20px;
+      border-color: transparent transparent transparent var(--gold);
+      margin-left: 5px;
+      transition: border-color var(--transition-fast);
+    }
+    
+    .play-btn:hover {
+      background: var(--gold);
+      transform: scale(1.1);
+    }
+    
+    .play-btn:hover::after {
+      border-color: transparent transparent transparent var(--navy);
+    }
+
+    /* Team Section */
+    .team-grid {
+      display: grid;
+      grid-template-columns: repeat(3, 1fr);
+      gap: 3rem;
+    }
+    
+    .team-card {
+      text-align: center;
+      background: var(--white);
+      border: 1px solid rgba(0,0,0,0.05);
+      padding-bottom: 2rem;
+      transition: transform var(--transition-smooth), box-shadow var(--transition-smooth);
+    }
+    
+    .team-card:hover {
+      transform: translateY(-10px);
+      box-shadow: var(--shadow-lg);
+    }
+    
+    .team-img-wrapper {
+      position: relative;
+      width: 100%;
+      height: 350px;
+      overflow: hidden;
+      margin-bottom: 1.5rem;
+    }
+    
+    /* Placeholder styles since we don't have team images yet */
+    .team-img-placeholder {
+      width: 100%;
+      height: 100%;
+      background: var(--beige-dark);
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      font-size: 3rem;
+      color: var(--white);
+      transition: transform var(--transition-smooth);
+    }
+    
+    .team-card:hover .team-img-placeholder {
+      transform: scale(1.05);
+    }
+
+    .team-social {
+      position: absolute;
+      bottom: -50px;
+      left: 0;
+      width: 100%;
+      display: flex;
+      justify-content: center;
+      gap: 1rem;
+      padding: 1rem;
+      background: linear-gradient(to top, rgba(11,29,38,0.9), transparent);
+      transition: bottom var(--transition-smooth);
+    }
+    
+    .team-card:hover .team-social {
+      bottom: 0;
+    }
+    
+    .team-social a {
+      color: var(--white);
+    }
+    .team-social a:hover {
+      color: var(--gold);
+    }
+
+    /* Responsive adjustments for this page */
+    @media (max-width: 768px) {
+      .timeline-container::before {
+        left: 20px;
+      }
+      .timeline-item {
+        width: 100%;
+        padding-left: 60px !important;
+        padding-right: 0 !important;
+      }
+      .timeline-item:nth-child(even) {
+        margin-left: 0;
+      }
+      .timeline-dot {
+        left: 12px !important;
+      }
+      .team-grid {
+        grid-template-columns: 1fr;
+        max-width: 400px;
+        margin: 0 auto;
+      }
+    }
+    /* About-page inline grid (mission/vision auto-fit) already uses minmax so it
+       collapses naturally; just ensure fixed backgrounds are disabled */
+    @media (max-width: 992px) {
+      .video-banner {
+        background-attachment: scroll !important;
+      }
+      /* Mission/Vision 2-col auto-fit grid responsive fix */
+      .grid[style*="repeat(auto-fit"] {
+        gap: 2.5rem !important;
+      }
+    }
+    @media (max-width: 576px) {
+      .video-banner {
+        height: 38vh;
+        min-height: 260px;
+        padding: 2rem 1rem;
+      }
+      .video-banner h2 {
+        font-size: clamp(1.5rem, 7vw, 2.5rem) !important;
+      }
+      .team-img-wrapper {
+        height: 220px;
+      }
+    }
+  </style>
+</head>
+<body>
+  <!-- Preloader -->
+  <div class="preloader" id="preloader">
+    <div class="preloader-inner">
+      <div class="logo">Elysium Grand</div>
+      <div class="preloader-bar"></div>
+    </div>
+  </div>
+
+  <!-- Navbar Placeholder -->
+  <!-- ===== NAVBAR COMPONENT ===== -->
+<nav class="navbar" id="main-navbar">
+  <div class="container">
+    <a href="../index.html" class="logo">Elysium <span>Grand</span></a>
+
+    <div class="nav-overlay" id="nav-overlay"></div>
+
+    <ul class="nav-menu" id="nav-menu">
+      <li><a href="../index.html" class="link-underline">Home</a></li>
+      <li><a href="about.html" class="active">About</a></li>
+      <li><a href="rooms.html" class="link-underline">Rooms</a></li>
+      <li><a href="booking.html" class="link-underline">Booking</a></li>
+      <li><a href="gallery.html" class="link-underline">Gallery</a></li>
+      <li><a href="contact.html" class="link-underline">Contact</a></li>
+    </ul>
+
+    <button class="hamburger" id="hamburger" aria-label="Toggle menu">
+      <span></span>
+      <span></span>
+      <span></span>
+    </button>
+  </div>
+</nav>
+
+
+  <!-- Page Hero -->
+  <section class="page-hero">
+    <div class="container">
+      <h1 class="animate-fade-up">Our Legacy</h1>
+      <p class="animate-fade-up delay-2">Crafting timeless memories since 2011.</p>
+      <div class="breadcrumb animate-fade-up delay-3">
+        <a href="../index.html">Home</a><span>/</span><span>About Us</span>
+      </div>
+    </div>
+  </section>
+
+  <!-- 1. Resort History -->
+  <section class="section" id="history">
+    <div class="container">
+      <div class="grid about-grid">
+        <div class="about-image-col scroll-animate">
+          <div class="img-zoom premium-card">
+            <img src="../assets/hero/hero-bg.jpg" alt="Elysium Resort History">
+          </div>
+        </div>
+        <div class="about-text scroll-animate delay-2">
+          <span class="section-label">Our History</span>
+          <h2 class="section-title">A Vision Realized</h2>
+          <div class="section-divider" style="margin-left: 0;"></div>
+          <p style="color: var(--text-muted); margin-bottom: 1.5rem; line-height: 1.8;">What began as a dream to create the ultimate secluded paradise has blossomed into the world's most distinguished luxury resort. Elysium Grand was founded with a singular purpose: to harmonize breathtaking natural architecture with an unparalleled standard of hospitality.</p>
+          <p style="color: var(--text-muted); line-height: 1.8;">Over the years, we have meticulously crafted every corner of our resort to reflect elegance and comfort. Our history is written in the smiles of our guests and the timeless memories forged on our pristine shores.</p>
+        </div>
+      </div>
+    </div>
+  </section>
+
+  <!-- 2. Mission & Vision -->
+  <section class="section section-beige" id="mission">
+    <div class="container">
+      <div class="grid" style="grid-template-columns: repeat(auto-fit, minmax(300px, 1fr)); gap: 4rem;">
+        <div class="scroll-animate">
+          <div style="margin-bottom: 1rem;">
+            <svg width="40" height="40" viewBox="0 0 24 24" fill="none" stroke="var(--gold)" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round"><polygon points="12 2 15.09 8.26 22 9.27 17 14.14 18.18 21.02 12 17.77 5.82 21.02 7 14.14 2 9.27 8.91 8.26 12 2"/></svg>
+          </div>
+          <h3 style="font-family: var(--font-hero); font-size: 2rem; margin-bottom: 1rem;">Our Mission</h3>
+          <p style="color: var(--text-muted); line-height: 1.8;">To provide an unparalleled luxury experience that transcends traditional hospitality. We strive to anticipate every need, curate unforgettable moments, and offer a sanctuary where our guests can truly disconnect and rejuvenate.</p>
+        </div>
+        <div class="scroll-animate delay-2">
+          <div style="margin-bottom: 1rem;">
+            <svg width="40" height="40" viewBox="0 0 24 24" fill="none" stroke="var(--gold)" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round"><path d="M12 22s8-4 8-10V5l-8-3-8 3v7c0 6 8 10 8 10z"/></svg>
+          </div>
+          <h3 style="font-family: var(--font-hero); font-size: 2rem; margin-bottom: 1rem;">Our Vision</h3>
+          <p style="color: var(--text-muted); line-height: 1.8;">To be the global benchmark for sustainable, ultra-luxury resort experiences. We envision a future where supreme comfort coexists in perfect harmony with environmental stewardship and local community enrichment.</p>
+        </div>
+      </div>
+    </div>
+  </section>
+
+  <!-- 3. Luxury Hospitality Information & 7. Why Choose Us (Combined Concept) -->
+  <section class="section" id="hospitality">
+    <div class="container">
+      <div class="section-header scroll-animate">
+        <span class="section-label">The Elysium Standard</span>
+        <h2 class="section-title">Why Choose Elysium</h2>
+        <div class="section-divider"></div>
+        <p class="section-subtitle">We believe luxury is not just a status, but a feeling of absolute care and absolute freedom.</p>
+      </div>
+
+      <div class="features-grid">
+        <div class="feature-card scroll-animate hover-lift">
+          <div class="feature-icon">
+            <svg width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M6 17H3a1 1 0 0 1-1-1V5a1 1 0 0 1 1-1h13a1 1 0 0 1 1 1v11a1 1 0 0 1-1 1h-3"/><path d="M18 17h5l-1-6h-4Z"/><circle cx="7" cy="17" r="2"/><circle cx="17" cy="17" r="2"/></svg>
+          </div>
+          <h3>Intuitive Service</h3>
+          <p>Our dedicated staff is trained to anticipate your needs before you even realize them, offering 24/7 personalized care.</p>
+        </div>
+        <div class="feature-card scroll-animate hover-lift delay-2">
+          <div class="feature-icon">
+            <svg width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M11 20A7 7 0 0 1 9.8 6.1C15.5 5 17 4.48 19 2c1 2 2 3 2 4h-2c-2 10-5 12.25-8 14Z"/><path d="M11 20c-4-3-1.5-12 1-14"/><path d="m7 21-4-4"/><path d="m14 21-4-4"/></svg>
+          </div>
+          <h3>Sustainable Luxury</h3>
+          <p>Experience zero-compromise luxury that respects and protects our delicate marine ecosystem.</p>
+        </div>
+        <div class="feature-card scroll-animate hover-lift delay-4">
+          <div class="feature-icon">
+            <svg width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M11 20a4 4 0 0 1-8 0c0-4.8 8-11 8-11s8 6.2 8 11a4 4 0 0 1-8 0Z"/><circle cx="11" cy="20" r="1"/></svg>
+          </div>
+          <h3>Curated Experiences</h3>
+          <p>From private yacht charters to bespoke culinary journeys, your itinerary is completely personalized.</p>
+        </div>
+        <div class="feature-card scroll-animate hover-lift delay-6">
+          <div class="feature-icon">
+            <svg width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="m12 3-1.912 5.813a2 2 0 0 1-1.275 1.275L3 12l5.813 1.912a2 2 0 0 1 1.275 1.275L12 21l1.912-5.813a2 2 0 0 1 1.275-1.275L21 12l-5.813-1.912a2 2 0 0 1-1.275-1.275L12 3Z"/></svg>
+          </div>
+          <h3>Absolute Privacy</h3>
+          <p>Our expansive villas and private beaches ensure your escape remains completely secluded and intimate.</p>
+        </div>
+      </div>
+    </div>
+  </section>
+
+  <!-- 4. Video Showcase Banner -->
+  <section class="video-banner scroll-animate" style="height: auto; padding: 6rem 1rem; display: block;">
+    <div class="container" style="position: relative; z-index: 2;">
+      <h2 style="font-family: var(--font-hero); font-size: 3.5rem; color: var(--white); margin-bottom: 2rem; text-shadow: 0 4px 12px rgba(0,0,0,0.5);">Experience The Magic</h2>
+      <div class="video-container" style="max-width: 900px; width: 100%; margin: 0 auto; border-radius: var(--radius-lg); overflow: hidden; box-shadow: 0 25px 50px -12px rgba(0, 0, 0, 0.5); border: 2px solid rgba(212, 175, 55, 0.2); background: #000; aspect-ratio: 16 / 9;">
+        <iframe style="width: 100%; height: 100%; border: 0; display: block;" src="https://www.youtube.com/embed/GeUO0VBdrN4?autoplay=0&mute=0&controls=1&rel=0" title="Experience The Magic" allow="accelerometer; autoplay; clipboard-write; encrypted-media; gyroscope; picture-in-picture" allowfullscreen></iframe>
+      </div>
+    </div>
+  </section>
+
+  <!-- 5. Achievements Timeline -->
+  <section class="section section-cream" id="timeline">
+    <div class="container">
+      <div class="section-header scroll-animate">
+        <span class="section-label">Our Journey</span>
+        <h2 class="section-title">Milestones of Excellence</h2>
+        <div class="section-divider"></div>
+      </div>
+
+      <div class="timeline-container">
+        <!-- Timeline Item 1 -->
+        <div class="timeline-item scroll-animate">
+          <div class="timeline-dot"></div>
+          <div class="timeline-content">
+            <div class="timeline-year">2011</div>
+            <h3 style="font-size: 1.25rem;">The Foundation</h3>
+            <p style="color: var(--text-muted); font-size: 0.9rem;">Elysium Grand Resort opens its doors, introducing a new standard of luxury to the island.</p>
+          </div>
+        </div>
+        
+        <!-- Timeline Item 2 -->
+        <div class="timeline-item scroll-animate">
+          <div class="timeline-dot"></div>
+          <div class="timeline-content">
+            <div class="timeline-year">2015</div>
+            <h3 style="font-size: 1.25rem;">5-Star Recognition</h3>
+            <p style="color: var(--text-muted); font-size: 0.9rem;">Awarded the prestigious Global 5-Star Diamond Award for exceptional hospitality and service.</p>
+          </div>
+        </div>
+
+        <!-- Timeline Item 3 -->
+        <div class="timeline-item scroll-animate">
+          <div class="timeline-dot"></div>
+          <div class="timeline-content">
+            <div class="timeline-year">2019</div>
+            <h3 style="font-size: 1.25rem;">Eco-Luxury Expansion</h3>
+            <p style="color: var(--text-muted); font-size: 0.9rem;">Launch of our fully sustainable Ocean Villas and achievement of carbon-neutral operations.</p>
+          </div>
+        </div>
+
+        <!-- Timeline Item 4 -->
+        <div class="timeline-item scroll-animate">
+          <div class="timeline-dot"></div>
+          <div class="timeline-content">
+            <div class="timeline-year">2024</div>
+            <h3 style="font-size: 1.25rem;">World's Best Resort</h3>
+            <p style="color: var(--text-muted); font-size: 0.9rem;">Crowned 'Best Luxury Beach Resort' globally by Condé Nast Traveler Readers' Choice Awards.</p>
+          </div>
+        </div>
+      </div>
+    </div>
+  </section>
+
+  <!-- 6. Staff & Management Section -->
+  <section class="section" id="team">
+    <div class="container">
+      <div class="section-header scroll-animate">
+        <span class="section-label">Leadership</span>
+        <h2 class="section-title">Meet the Visionaries</h2>
+        <div class="section-divider"></div>
+        <p class="section-subtitle">The dedicated professionals working tirelessly behind the scenes to curate your perfect stay.</p>
+      </div>
+
+      <div class="team-grid">
+        <!-- Team Member 1 -->
+        <div class="team-card premium-card scroll-animate">
+          <div class="team-img-wrapper">
+            <img src="../assets/hero/hero-bg.jpg" alt="Arthur Pendelton" style="width: 100%; height: 100%; object-fit: cover;">
+            <div class="team-social">
+              <a href="https://linkedin.com" target="_blank" aria-label="LinkedIn"><svg width="18" height="18" viewBox="0 0 24 24" fill="currentColor"><path d="M19 0h-14c-2.761 0-5 2.239-5 5v14c0 2.761 2.239 5 5 5h14c2.762 0 5-2.238 5-5v-14c0-2.761-2.238-5-5-5zm-11 19h-3v-11h3v11zm-1.5-12.268c-.966 0-1.75-.79-1.75-1.764s.784-1.764 1.75-1.764 1.75.79 1.75 1.764-.783 1.764-1.75 1.764zm13.5 12.268h-3v-5.604c0-3.368-4-3.113-4 0v5.604h-3v-11h3v1.765c1.396-2.586 7-2.777 7 2.476v6.759z"/></svg></a>
+              <a href="https://wa.me/1234567890" target="_blank" aria-label="WhatsApp"><svg width="18" height="18" viewBox="0 0 24 24" fill="currentColor"><path d="M17.472 14.382c-.297-.149-1.758-.867-2.03-.967-.273-.099-.471-.148-.67.15-.197.297-.767.966-.94 1.164-.173.199-.347.223-.644.075-.297-.15-1.255-.463-2.39-1.475-.883-.788-1.48-1.761-1.653-2.059-.173-.297-.018-.458.13-.606.134-.133.298-.347.446-.52.149-.174.198-.298.298-.497.099-.198.05-.371-.025-.52-.075-.149-.669-1.612-.916-2.207-.242-.579-.487-.5-.669-.51-.173-.008-.371-.01-.57-.01-.198 0-.52.074-.792.372-.272.297-1.04 1.016-1.04 2.479 0 1.462 1.065 2.875 1.213 3.074.149.198 2.096 3.2 5.077 4.487.709.306 1.262.489 1.694.625.712.227 1.36.195 1.871.118.571-.085 1.758-.719 2.006-1.413.248-.694.248-1.289.173-1.413-.074-.124-.272-.198-.57-.347m-5.421 7.403h-.004a9.87 9.87 0 01-5.031-1.378l-.361-.214-3.741.982.998-3.648-.235-.374a9.86 9.86 0 01-1.51-5.26c.001-5.45 4.436-9.884 9.888-9.884 2.64 0 5.122 1.03 6.988 2.898a9.825 9.825 0 012.893 6.994c-.003 5.45-4.437 9.884-9.885 9.884m8.413-18.297A11.815 11.815 0 0012.05 0C5.495 0 .16 5.335.157 11.892c0 2.096.547 4.142 1.588 5.945L.057 24l6.305-1.654a11.882 11.882 0 005.683 1.448h.005c6.554 0 11.89-5.335 11.893-11.893a11.821 11.821 0 00-3.48-8.413z"/></svg></a>
+              <a href="https://x.com" target="_blank" aria-label="X"><svg width="18" height="18" viewBox="0 0 24 24" fill="currentColor"><path d="M18.901 1.153h3.68l-8.04 9.19L24 22.846h-7.406l-5.8-7.584-6.638 7.584H.474l8.6-9.83L0 1.154h7.594l5.243 6.932ZM17.61 20.644h2.039L6.486 3.24H4.298Z"/></svg></a>
+            </div>
+          </div>
+          <h3 style="font-size: 1.5rem; margin-bottom: 0.25rem;">Arthur Pendelton</h3>
+          <p style="color: var(--gold); font-family: var(--font-body); font-size: 0.85rem; text-transform: uppercase; letter-spacing: 2px;">General Manager</p>
+        </div>
+
+        <!-- Team Member 2 -->
+        <div class="team-card premium-card scroll-animate delay-2">
+          <div class="team-img-wrapper">
+            <img src="../assets/gallery/gallery-2.jpg" alt="Isabella Rossi" style="width: 100%; height: 100%; object-fit: cover;">
+            <div class="team-social">
+              <a href="https://linkedin.com" target="_blank" aria-label="LinkedIn"><svg width="18" height="18" viewBox="0 0 24 24" fill="currentColor"><path d="M19 0h-14c-2.761 0-5 2.239-5 5v14c0 2.761 2.239 5 5 5h14c2.762 0 5-2.238 5-5v-14c0-2.761-2.238-5-5-5zm-11 19h-3v-11h3v11zm-1.5-12.268c-.966 0-1.75-.79-1.75-1.764s.784-1.764 1.75-1.764 1.75.79 1.75 1.764-.783 1.764-1.75 1.764zm13.5 12.268h-3v-5.604c0-3.368-4-3.113-4 0v5.604h-3v-11h3v1.765c1.396-2.586 7-2.777 7 2.476v6.759z"/></svg></a>
+              <a href="https://wa.me/1234567890" target="_blank" aria-label="WhatsApp"><svg width="18" height="18" viewBox="0 0 24 24" fill="currentColor"><path d="M17.472 14.382c-.297-.149-1.758-.867-2.03-.967-.273-.099-.471-.148-.67.15-.197.297-.767.966-.94 1.164-.173.199-.347.223-.644.075-.297-.15-1.255-.463-2.39-1.475-.883-.788-1.48-1.761-1.653-2.059-.173-.297-.018-.458.13-.606.134-.133.298-.347.446-.52.149-.174.198-.298.298-.497.099-.198.05-.371-.025-.52-.075-.149-.669-1.612-.916-2.207-.242-.579-.487-.5-.669-.51-.173-.008-.371-.01-.57-.01-.198 0-.52.074-.792.372-.272.297-1.04 1.016-1.04 2.479 0 1.462 1.065 2.875 1.213 3.074.149.198 2.096 3.2 5.077 4.487.709.306 1.262.489 1.694.625.712.227 1.36.195 1.871.118.571-.085 1.758-.719 2.006-1.413.248-.694.248-1.289.173-1.413-.074-.124-.272-.198-.57-.347m-5.421 7.403h-.004a9.87 9.87 0 01-5.031-1.378l-.361-.214-3.741.982.998-3.648-.235-.374a9.86 9.86 0 01-1.51-5.26c.001-5.45 4.436-9.884 9.888-9.884 2.64 0 5.122 1.03 6.988 2.898a9.825 9.825 0 012.893 6.994c-.003 5.45-4.437 9.884-9.885 9.884m8.413-18.297A11.815 11.815 0 0012.05 0C5.495 0 .16 5.335.157 11.892c0 2.096.547 4.142 1.588 5.945L.057 24l6.305-1.654a11.882 11.882 0 005.683 1.448h.005c6.554 0 11.89-5.335 11.893-11.893a11.821 11.821 0 00-3.48-8.413z"/></svg></a>
+              <a href="https://instagram.com" target="_blank" aria-label="Instagram"><svg width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><rect x="2" y="2" width="20" height="20" rx="5"/><circle cx="12" cy="12" r="4"/></svg></a>
+            </div>
+          </div>
+          <h3 style="font-size: 1.5rem; margin-bottom: 0.25rem;">Isabella Rossi</h3>
+          <p style="color: var(--gold); font-family: var(--font-body); font-size: 0.85rem; text-transform: uppercase; letter-spacing: 2px;">Executive Chef</p>
+        </div>
+
+        <!-- Team Member 3 -->
+        <div class="team-card premium-card scroll-animate delay-4">
+          <div class="team-img-wrapper">
+            <img src="../assets/gallery/gallery-1.jpg" alt="Elena Rostova" style="width: 100%; height: 100%; object-fit: cover;">
+            <div class="team-social">
+              <a href="https://linkedin.com" target="_blank" aria-label="LinkedIn"><svg width="18" height="18" viewBox="0 0 24 24" fill="currentColor"><path d="M19 0h-14c-2.761 0-5 2.239-5 5v14c0 2.761 2.239 5 5 5h14c2.762 0 5-2.238 5-5v-14c0-2.761-2.238-5-5-5zm-11 19h-3v-11h3v11zm-1.5-12.268c-.966 0-1.75-.79-1.75-1.764s.784-1.764 1.75-1.764 1.75.79 1.75 1.764-.783 1.764-1.75 1.764zm13.5 12.268h-3v-5.604c0-3.368-4-3.113-4 0v5.604h-3v-11h3v1.765c1.396-2.586 7-2.777 7 2.476v6.759z"/></svg></a>
+              <a href="https://wa.me/1234567890" target="_blank" aria-label="WhatsApp"><svg width="18" height="18" viewBox="0 0 24 24" fill="currentColor"><path d="M17.472 14.382c-.297-.149-1.758-.867-2.03-.967-.273-.099-.471-.148-.67.15-.197.297-.767.966-.94 1.164-.173.199-.347.223-.644.075-.297-.15-1.255-.463-2.39-1.475-.883-.788-1.48-1.761-1.653-2.059-.173-.297-.018-.458.13-.606.134-.133.298-.347.446-.52.149-.174.198-.298.298-.497.099-.198.05-.371-.025-.52-.075-.149-.669-1.612-.916-2.207-.242-.579-.487-.5-.669-.51-.173-.008-.371-.01-.57-.01-.198 0-.52.074-.792.372-.272.297-1.04 1.016-1.04 2.479 0 1.462 1.065 2.875 1.213 3.074.149.198 2.096 3.2 5.077 4.487.709.306 1.262.489 1.694.625.712.227 1.36.195 1.871.118.571-.085 1.758-.719 2.006-1.413.248-.694.248-1.289.173-1.413-.074-.124-.272-.198-.57-.347m-5.421 7.403h-.004a9.87 9.87 0 01-5.031-1.378l-.361-.214-3.741.982.998-3.648-.235-.374a9.86 9.86 0 01-1.51-5.26c.001-5.45 4.436-9.884 9.888-9.884 2.64 0 5.122 1.03 6.988 2.898a9.825 9.825 0 012.893 6.994c-.003 5.45-4.437 9.884-9.885 9.884m8.413-18.297A11.815 11.815 0 0012.05 0C5.495 0 .16 5.335.157 11.892c0 2.096.547 4.142 1.588 5.945L.057 24l6.305-1.654a11.882 11.882 0 005.683 1.448h.005c6.554 0 11.89-5.335 11.893-11.893a11.821 11.821 0 00-3.48-8.413z"/></svg></a>
+              <a href="https://x.com" target="_blank" aria-label="X"><svg width="18" height="18" viewBox="0 0 24 24" fill="currentColor"><path d="M18.901 1.153h3.68l-8.04 9.19L24 22.846h-7.406l-5.8-7.584-6.638 7.584H.474l8.6-9.83L0 1.154h7.594l5.243 6.932ZM17.61 20.644h2.039L6.486 3.24H4.298Z"/></svg></a>
+            </div>
+          </div>
+          <h3 style="font-size: 1.5rem; margin-bottom: 0.25rem;">Elena Rostova</h3>
+          <p style="color: var(--gold); font-family: var(--font-body); font-size: 0.85rem; text-transform: uppercase; letter-spacing: 2px;">Director of Guest Experience</p>
+        </div>
+      </div>
+    </div>
+  </section>
+
+  <!-- Footer Placeholder -->
+  <!-- ===== PROFESSIONAL LUXURY FOOTER COMPONENT ===== -->
+<footer class="footer">
+  <div class="footer-glass">
+    <div class="container">
+      <div class="footer-top">
+        
+        <!-- LEFT SECTION — BRAND IDENTITY -->
+        <div class="footer-brand">
+          <a href="../index.html" class="footer-logo-link">
+            <h2 class="footer-logo">Elysium <span>Grand</span></h2>
+          </a>
+          <p class="footer-description">
+            “Experience unparalleled luxury at Elysium Grand Resort. Where timeless elegance meets modern comfort on the pristine shores of paradise. Discover your ultimate getaway.”
+          </p>
+          
+          <div class="footer-social-section">
+            <div class="footer-social">
+              <!-- Instagram -->
+              <a href="https://instagram.com" target="_blank" class="social-icon" aria-label="Instagram">
+                <svg width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round"><rect x="2" y="2" width="20" height="20" rx="5" ry="5"/><path d="M16 11.37A4 4 0 1 1 12.63 8 4 4 0 0 1 16 11.37z"/><line x1="17.5" y1="6.5" x2="17.51" y2="6.5"/></svg>
+              </a>
+              <!-- Facebook -->
+              <a href="https://facebook.com" target="_blank" class="social-icon" aria-label="Facebook">
+                <svg width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round"><path d="M18 2h-3a5 5 0 0 0-5 5v3H7v4h3v8h4v-8h3l1-4h-4V7a1 1 0 0 1 1-1h3z"/></svg>
+              </a>
+              <!-- WhatsApp -->
+              <a href="https://wa.me/1234567890" target="_blank" class="social-icon" aria-label="WhatsApp">
+                <svg width="18" height="18" viewBox="0 0 24 24" fill="currentColor"><path d="M17.472 14.382c-.297-.149-1.758-.867-2.03-.967-.273-.099-.471-.148-.67.15-.197.297-.767.966-.94 1.164-.173.199-.347.223-.644.075-.297-.15-1.255-.463-2.39-1.475-.883-.788-1.48-1.761-1.653-2.059-.173-.297-.018-.458.13-.606.134-.133.298-.347.446-.52.149-.174.198-.298.298-.497.099-.198.05-.371-.025-.52-.075-.149-.669-1.612-.916-2.207-.242-.579-.487-.5-.669-.51-.173-.008-.371-.01-.57-.01-.198 0-.52.074-.792.372-.272.297-1.04 1.016-1.04 2.479 0 1.462 1.065 2.875 1.213 3.074.149.198 2.096 3.2 5.077 4.487.709.306 1.262.489 1.694.625.712.227 1.36.195 1.871.118.571-.085 1.758-.719 2.006-1.413.248-.694.248-1.289.173-1.413-.074-.124-.272-.198-.57-.347m-5.421 7.403h-.004a9.87 9.87 0 01-5.031-1.378l-.361-.214-3.741.982.998-3.648-.235-.374a9.86 9.86 0 01-1.51-5.26c.001-5.45 4.436-9.884 9.888-9.884 2.64 0 5.122 1.03 6.988 2.898a9.825 9.825 0 012.893 6.994c-.003 5.45-4.437 9.884-9.885 9.884m8.413-18.297A11.815 11.815 0 0012.05 0C5.495 0 .16 5.335.157 11.892c0 2.096.547 4.142 1.588 5.945L.057 24l6.305-1.654a11.882 11.882 0 005.683 1.448h.005c6.554 0 11.89-5.335 11.893-11.893a11.821 11.821 0 00-3.48-8.413z"/></svg>
+              </a>
+              <!-- YouTube -->
+              <a href="https://youtube.com" target="_blank" class="social-icon" aria-label="YouTube">
+                <svg width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round"><path d="M22.54 6.42a2.78 2.78 0 0 0-1.94-2C18.88 4 12 4 12 4s-6.88 0-8.6.42a2.78 2.78 0 0 0-1.94 2C1 8.14 1 12 1 12s0 3.86.42 5.58a2.78 2.78 0 0 0 1.94 2c1.71.42 8.6.42 8.6.42s6.88 0 8.6-.42a2.78 2.78 0 0 0 1.94-2C23 15.86 23 12 23 12s0-3.86-.42-5.58z"/><polygon points="9.75 15.02 15.5 12 9.75 8.98 9.75 15.02"/></svg>
+              </a>
+            </div>
+          </div>
+        </div>
+        
+        <!-- CENTER SECTION — QUICK LINKS -->
+        <div class="footer-nav">
+          <h4 class="footer-heading">Quick Links</h4>
+          <ul class="footer-list">
+            <li><a href="../index.html" class="footer-link">Home</a></li>
+            <li><a href="about.html" class="footer-link">About</a></li>
+            <li><a href="rooms.html" class="footer-link">Rooms & Suites</a></li>
+            <li><a href="booking.html" class="footer-link">Booking</a></li>
+            <li><a href="gallery.html" class="footer-link">Gallery</a></li>
+            <li><a href="contact.html" class="footer-link">Contact</a></li>
+            <li><a href="contact.html#faq" class="footer-link">FAQ</a></li>
+            <li><a href="sitemap.html" class="footer-link">Sitemap</a></li>
+          </ul>
+        </div>
+        
+        <!-- RIGHT SECTION — CONTACT -->
+        <div class="footer-contact">
+          <h4 class="footer-heading">Contact</h4>
+          <div class="footer-contact-info">
+            <a href="https://maps.google.com/?q=Elysium+Grand+Resort+Maldives" target="_blank" class="contact-item link">
+              <div class="contact-icon-small">
+                <svg width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.5"><path d="M20 10c0 6-8 12-8 12s-8-6-8-12a8 8 0 0 1 16 0Z"/><circle cx="12" cy="10" r="3"/></svg>
+              </div>
+              <p>Elysium Grand Resort<br>Ocean Breeze Avenue,<br>Maldives Luxury Coast</p>
+            </a>
+            
+            <a href="mailto:info@elysiumgrand.com" class="contact-item link">
+              <div class="contact-icon-small">
+                <svg width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.5"><rect width="20" height="16" x="2" y="4" rx="2"/><path d="m22 7-8.97 5.7a1.94 1.94 0 0 1-2.06 0L2 7"/></svg>
+              </div>
+              <p>info@elysiumgrand.com</p>
+            </a>
+            
+            <a href="tel:+919876543210" class="contact-item link">
+              <div class="contact-icon-small">
+                <svg width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.5"><path d="M22 16.92v3a2 2 0 0 1-2.18 2 19.79 19.79 0 0 1-8.63-3.07 19.5 19.5 0 0 1-6-6 19.79 19.79 0 0 1-3.07-8.67A2 2 0 0 1 4.11 2h3a2 2 0 0 1 2 1.72 12.84 12.84 0 0 0 .7 2.81 2 2 0 0 1-.45 2.11L8.09 9.91a16 16 0 0 0 6 6l1.27-1.27a2 2 0 0 1 2.11-.45 12.84 12.84 0 0 0 2.81.7A2 2 0 0 1 22 16.92z"/></svg>
+              </div>
+              <p>+91 98765 43210</p>
+            </a>
+            
+            <div class="contact-status">
+              <p>Available 24/7 for reservations</p>
+            </div>
+          </div>
+        </div>
+      </div>
+      
+      <!-- BOTTOM FOOTER BAR -->
+      <div class="footer-bottom">
+        <div class="footer-divider-luxury"></div>
+        <div class="footer-bottom-wrap">
+          <div class="copyright-left">
+            <p>&copy; <span id="current-year"></span> Elysium Grand Resort. All Rights Reserved.</p>
+          </div>
+          <div class="footer-bottom-links">
+            <a href="privacy-policy.html">Privacy Policy</a>
+            <a href="terms-conditions.html">Terms & Conditions</a>
+            <a href="contact.html#faq">FAQ</a>
+            <a href="404.html">404 Page</a>
+          </div>
+        </div>
+      </div>
+    </div>
+  </div>
+</footer>
+
+
+  <!-- Scroll to Top -->
+  <button class="scroll-top" id="scroll-top" aria-label="Scroll to top">↑</button>
+
+  <script src="../js/main.js"></script>
+  <script src="../js/slider.js"></script>
+</body>
+</html>
+
+
+
+
