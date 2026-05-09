@@ -20,11 +20,6 @@
         grid-template-columns: 1fr !important;
         gap: 2rem;
       }
-      /* Intro about grid */
-      .about-grid {
-        grid-template-columns: 1fr;
-        gap: 3rem;
-      }
       /* Booking bar negative margin fix */
       .booking-bar {
         margin-top: -20px;
@@ -84,6 +79,7 @@
         <li><a href="pages/booking.html">Booking</a></li>
         <li><a href="pages/gallery.html">Gallery</a></li>
         <li><a href="pages/contact.html">Contact</a></li>
+        <li class="nav-login-item"><a href="pages/login.html" class="nav-login-btn">Login</a></li>
       </ul>
 
       <button class="hamburger" id="hamburger" aria-label="Toggle menu">
@@ -144,20 +140,44 @@
   </div>
 
   <!-- 2. Resort Introduction -->
-  <section class="section" id="introduction">
+  <section class="section" id="introduction" style="overflow: hidden;">
     <div class="container">
-      <div class="about-grid">
-        <div class="about-text scroll-animate">
-          <span class="section-label">Discover Elysium</span>
+      <div class="grid about-grid" style="display: grid; grid-template-columns: 1fr 1fr; gap: 4rem; align-items: center;">
+        <div class="about-text scroll-animate" style="z-index: 2;">
+          <span class="section-label">Our Legacy</span>
           <h2 class="section-title">A Sanctuary of Unrivaled Luxury</h2>
-          <div class="section-divider" style="margin-left: 0;"></div>
-          <p class="section-subtitle" style="margin-bottom: 2rem;">Nestled on the pristine shores of an exclusive private bay, Elysium Grand Resort redefines the art of luxury hospitality. Every element of our resort is meticulously designed to create an atmosphere of sophisticated tranquility.</p>
-          <p style="color: var(--text-muted); margin-bottom: 2.5rem; line-height: 1.8;">From our award-winning oceanfront dining to the rejuvenating embrace of our holistic spa, we invite you to surrender to a world where your every desire is anticipated and exceeded. Experience a retreat that harmonizes breathtaking natural beauty with uncompromising elegance.</p>
-          <a href="pages/about.html" class="link-underline" style="font-weight: 600; letter-spacing: 2px; text-transform: uppercase;">Discover Our Story &rarr;</a>
+          <div class="section-divider" style="margin-left: 0; width: 80px; height: 3px;"></div>
+          
+          <p class="section-subtitle" style="margin-bottom: 1.5rem; font-size: 1.2rem; color: var(--navy); font-weight: 500;">
+            Nestled on the pristine shores of an exclusive private bay, Elysium Grand Resort redefines the art of luxury hospitality.
+          </p>
+          
+          <div class="about-content-rich" style="margin-bottom: 2.5rem;">
+            <p style="color: var(--text-muted); margin-bottom: 1.2rem; line-height: 1.8;">
+              Every element of our resort is meticulously designed to create an atmosphere of sophisticated tranquility. From our award-winning oceanfront dining to the rejuvenating embrace of our holistic spa, we invite you to surrender to a world where your every desire is anticipated and exceeded.
+            </p>
+            <p style="color: var(--text-muted); line-height: 1.8;">
+              Experience a retreat that harmonizes breathtaking natural beauty with uncompromising elegance. Our story began with a vision to create the world's most intimate coastal escape, a mission we continue to fulfill every day for our distinguished guests.
+            </p>
+          </div>
+          
+          <a href="pages/about.html" class="link-underline" style="font-weight: 700; letter-spacing: 2px; text-transform: uppercase; color: var(--navy); display: inline-flex; align-items: center; gap: 10px;">
+            Discover Our Story <span style="font-size: 1.2rem;">&rarr;</span>
+          </a>
         </div>
+        
         <div class="about-image-col scroll-animate delay-2">
-          <div class="img-zoom" style="border-radius: var(--radius-lg); overflow: hidden; box-shadow: var(--shadow-lg);">
-            <img src="assets/hero/hero-bg.jpg" alt="Elysium Grand Resort Aerial View">
+          <!-- The Luxury Frame (The Box) -->
+          <div class="luxury-image-frame" style="padding: 1.5rem; border: 1px solid var(--gold); border-radius: var(--radius-lg); background: rgba(212, 175, 55, 0.05); position: relative; z-index: 1;">
+            <div class="img-zoom" style="border-radius: var(--radius-md); overflow: hidden; box-shadow: var(--shadow-lg);">
+              <img src="assets/hero/hero-bg.jpg" alt="Elysium Grand Resort Aerial View" style="width: 100%; height: auto; display: block; object-fit: cover;">
+            </div>
+            
+            <!-- Luxury Float Badge (Positioned inside the frame bounds) -->
+            <div class="luxury-badge animate-float" style="position: absolute; bottom: 5px; left: 5px; background: var(--gold); color: var(--white); padding: 1.5rem; border-radius: var(--radius-sm); box-shadow: var(--shadow-lg); z-index: 2;">
+              <span style="display: block; font-size: 2rem; font-family: var(--font-hero); line-height: 1;">25</span>
+              <span style="display: block; font-size: 0.6rem; text-transform: uppercase; letter-spacing: 2px; margin-top: 5px;">Years of Excellence</span>
+            </div>
           </div>
         </div>
       </div>
@@ -448,7 +468,6 @@
               <li><a href="pages/gallery.html" class="footer-link">Gallery</a></li>
               <li><a href="pages/contact.html" class="footer-link">Contact</a></li>
               <li><a href="pages/contact.html#faq" class="footer-link">FAQ</a></li>
-              <li><a href="pages/sitemap.html" class="footer-link">Sitemap</a></li>
             </ul>
           </div>
           
@@ -495,7 +514,7 @@
               <a href="pages/privacy-policy.html">Privacy Policy</a>
               <a href="pages/terms-conditions.html">Terms & Conditions</a>
               <a href="pages/contact.html#faq">FAQ</a>
-              <a href="pages/404.html">404 Page</a>
+              <a href="pages/sitemap.html">Sitemap</a>
             </div>
           </div>
         </div>

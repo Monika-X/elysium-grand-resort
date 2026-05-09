@@ -195,6 +195,15 @@
       /* Removed grayscale filter for a colorful map */
     }
 
+    /* Pull up section on desktop, less on mobile */
+    .overlap-section {
+      padding-top: 0 !important;
+      margin-top: -60px;
+      position: relative;
+      z-index: 10;
+      background: transparent !important;
+    }
+
     @media (max-width: 992px) {
       .contact-layout { grid-template-columns: 1fr; gap: 3rem; }
       /* Support services 3-col → 1-col */
@@ -212,6 +221,9 @@
       /* Map height */
       .map-container {
         height: 320px;
+      }
+      .overlap-section {
+        margin-top: -30px;
       }
     }
     @media (max-width: 768px) {
@@ -237,6 +249,9 @@
       }
       .map-container {
         height: 220px;
+      }
+      .overlap-section {
+        margin-top: -20px;
       }
     }
   </style>
@@ -265,6 +280,7 @@
       <li><a href="booking.html" class="link-underline">Booking</a></li>
       <li><a href="gallery.html" class="link-underline">Gallery</a></li>
       <li><a href="contact.html" class="active">Contact</a></li>
+      <li class="nav-login-item"><a href="login.html" class="nav-login-btn">Login</a></li>
     </ul>
 
     <button class="hamburger" id="hamburger" aria-label="Toggle menu">
@@ -288,7 +304,7 @@
   </section>
 
   <!-- Contact Section -->
-  <section class="section section-beige" style="padding-top: 0; margin-top: -60px; position: relative; z-index: 10; background: transparent;">
+  <section class="section section-beige overlap-section">
     <div class="container">
       <div class="contact-layout">
         
@@ -612,7 +628,7 @@
             <li><a href="gallery.html" class="footer-link">Gallery</a></li>
             <li><a href="contact.html" class="footer-link">Contact</a></li>
             <li><a href="contact.html#faq" class="footer-link">FAQ</a></li>
-            <li><a href="sitemap.html" class="footer-link">Sitemap</a></li>
+
           </ul>
         </div>
         
@@ -659,7 +675,7 @@
             <a href="privacy-policy.html">Privacy Policy</a>
             <a href="terms-conditions.html">Terms & Conditions</a>
             <a href="contact.html#faq">FAQ</a>
-            <a href="404.html">404 Page</a>
+            <a href="sitemap.html">Sitemap</a>
           </div>
         </div>
       </div>

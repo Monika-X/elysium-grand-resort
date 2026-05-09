@@ -147,6 +147,19 @@ img {
     border: none;
   }
 
+  .nav-menu li.nav-login-item {
+    margin-top: 2.5rem;
+    width: auto;
+  }
+  
+  .nav-menu li.nav-login-item a {
+    border-color: var(--gold) !important;
+    color: var(--gold) !important;
+    padding: 0.8rem 2.5rem !important;
+    font-size: 0.9rem;
+    letter-spacing: 3px;
+  }
+
   .nav-menu a {
     font-size: 1.15rem;
     display: inline-block;
