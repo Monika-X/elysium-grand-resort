@@ -1,4 +1,4 @@
-﻿/* ===== MAIN.JS - Global Website Logic ===== */
+/* ===== MAIN.JS - Global Website Logic ===== */
 
 document.addEventListener('DOMContentLoaded', () => {
   loadComponents();
@@ -10,12 +10,13 @@ document.addEventListener('DOMContentLoaded', () => {
   initLazyLoading();
   initFaqAccordion();
   initVideoModal();
+  initProfileDropdown();
 });
 
 /* ----- Load Header & Footer Components ----- */
 async function loadComponents() {
   const basePath = window.location.pathname.includes('/pages/') ? '../' : './';
-  
+
   // Load Navbar
   const loadNavbar = async () => {
     const placeholder = document.getElementById('navbar-placeholder');
@@ -25,11 +26,15 @@ async function loadComponents() {
       if (res.ok) {
         let html = await res.text();
         if (window.location.pathname.includes('/pages/')) {
-          html = html.replace(/href="index\.html"/g, 'href="../index.html"');
-          html = html.replace(/href="pages\//g, 'href=""');
+          // Safe literal replacements — no regex that could match SVG path data
+          html = html.split('href="index.html"').join('href="../index.html"');
+          html = html.split('href="pages/').join('href="');
+          // Asset path fix
+          html = html.split('src="assets/').join('src="../assets/');
         }
         placeholder.innerHTML = html;
         initNavbar();
+        initProfileDropdown();
       }
     } catch (e) { console.error('Navbar error:', e); }
   };
@@ -44,20 +49,16 @@ async function loadComponents() {
         let html = await res.text();
         if (window.location.pathname.includes('/pages/')) {
           // Adjust links for sub-pages
-          html = html.replace(/href="index\.html"/g, 'href="../index.html"');
-          // For links starting with pages/, remove the prefix since we're already in /pages/
-          html = html.replace(/href="pages\//g, 'href="');
-          // For other local links (like assets or css), add ../
-          // (Only if they don't start with http, #, or ../ or are a known page name)
-          html = html.replace(/href="(?!http|\#|\.\.\/|about|rooms|booking|gallery|contact|privacy-policy|terms-conditions|404)/g, 'href="../');
+          html = html.split('href="index.html"').join('href="../index.html"');
+          html = html.split('href="pages/').join('href="');
         }
         placeholder.innerHTML = html;
         console.log("ELYSALUM GRAND: Footer Loaded");
         initScrollAnimations();
-        
+
         // Update year
         const yr = document.getElementById('current-year');
-        if(yr) yr.textContent = new Date().getFullYear();
+        if (yr) yr.textContent = new Date().getFullYear();
       }
     } catch (e) { console.error('Footer error:', e); }
   };
@@ -67,7 +68,7 @@ async function loadComponents() {
 
   // Always update year if element exists
   const yr = document.getElementById('current-year');
-  if(yr) yr.textContent = new Date().getFullYear();
+  if (yr) yr.textContent = new Date().getFullYear();
 }
 
 /* ----- Preloader ----- */
@@ -88,7 +89,7 @@ function initNavbar() {
   const navbar = document.querySelector('.navbar');
   if (!navbar || navbar.dataset.initialized) return;
   navbar.dataset.initialized = "true";
-  
+
   const hamburger = document.getElementById('hamburger');
   const navMenu = document.getElementById('nav-menu');
   const navOverlay = document.getElementById('nav-overlay');
@@ -113,7 +114,7 @@ function initNavbar() {
 
     hamburger.addEventListener('click', toggleMenu);
     navOverlay.addEventListener('click', toggleMenu);
-    
+
     // Close menu when a link is clicked
     const navLinks = navMenu.querySelectorAll('a');
     navLinks.forEach(link => {
@@ -132,19 +133,19 @@ function highlightActiveNavLink() {
   const currentPath = window.location.pathname;
   // Normalize path and get filename
   const fileName = currentPath.split('/').pop() || 'index.html';
-  
+
   navLinks.forEach(link => {
     link.classList.remove('active');
     const href = link.getAttribute('href');
     if (!href) return;
-    
+
     const linkFile = href.split('/').pop();
-    
+
     // Check if filenames match
     if (fileName === linkFile) {
       link.classList.add('active');
     }
-    
+
     // special case: keep 'Rooms' active on room details
     if (fileName.includes('room-details') && linkFile.includes('rooms')) {
       link.classList.add('active');
@@ -155,7 +156,7 @@ function highlightActiveNavLink() {
 /* ----- Scroll Reveal Animations ----- */
 function initScrollAnimations() {
   const elements = document.querySelectorAll('.scroll-animate');
-  
+
   if (!('IntersectionObserver' in window)) {
     // Fallback for older browsers
     elements.forEach(el => el.classList.add('visible'));
@@ -205,13 +206,13 @@ function initSmoothScrolling() {
     anchor.addEventListener('click', function (e) {
       const targetId = this.getAttribute('href');
       if (targetId === '#') return;
-      
+
       const targetElement = document.querySelector(targetId);
       if (targetElement) {
         e.preventDefault();
         const navHeight = document.querySelector('.navbar') ? document.querySelector('.navbar').offsetHeight : 0;
         const targetPosition = targetElement.getBoundingClientRect().top + window.pageYOffset - navHeight;
-        
+
         window.scrollTo({
           top: targetPosition,
           behavior: 'smooth'
@@ -224,7 +225,7 @@ function initSmoothScrolling() {
 /* ----- Lazy Loading Images ----- */
 function initLazyLoading() {
   const images = document.querySelectorAll('img:not([loading="lazy"])');
-  
+
   if ('IntersectionObserver' in window) {
     const imgObserver = new IntersectionObserver((entries, observer) => {
       entries.forEach(entry => {
@@ -257,13 +258,13 @@ function initFaqAccordion() {
     header.addEventListener('click', () => {
       const item = header.parentElement;
       const content = header.nextElementSibling;
-      
+
       const currentlyActive = document.querySelector('.accordion-item.active');
       if (currentlyActive && currentlyActive !== item) {
         currentlyActive.classList.remove('active');
         currentlyActive.querySelector('.accordion-content').style.maxHeight = null;
       }
-      
+
       if (item.classList.contains('active')) {
         item.classList.remove('active');
         content.style.maxHeight = null;
@@ -277,7 +278,7 @@ function initFaqAccordion() {
 /* ----- Video Modal ----- */
 function initVideoModal() {
   const playBtns = document.querySelectorAll('.play-btn');
-  
+
   if (!playBtns.length) return;
 
   // Create Modal element if it doesn't exist
@@ -303,7 +304,7 @@ function initVideoModal() {
   playBtns.forEach(btn => {
     btn.addEventListener('click', () => {
       // High-quality luxury resort cinematic video
-      const videoSrc = "https://www.youtube.com/embed/T6ZAnC5B-fI?autoplay=1&mute=0&rel=0"; 
+      const videoSrc = "https://www.youtube.com/embed/T6ZAnC5B-fI?autoplay=1&mute=0&rel=0";
       iframe.src = videoSrc;
       videoModal.classList.add('active');
       document.body.style.overflow = 'hidden';
@@ -323,3 +324,31 @@ function initVideoModal() {
   });
 }
 
+/* ----- Profile Dropdown Toggle ----- */
+function initProfileDropdown() {
+  const profileWrap = document.querySelector('.nav-profile-wrap');
+  if (!profileWrap) return;
+
+  const profileIcon = profileWrap.querySelector('.nav-profile-icon');
+
+  // Click to toggle (accessible on mobile and desktop)
+  profileIcon.addEventListener('click', (e) => {
+    e.preventDefault();
+    e.stopPropagation();
+    profileWrap.classList.toggle('active');
+  });
+
+  // Close when clicking elsewhere
+  document.addEventListener('click', (e) => {
+    if (!profileWrap.contains(e.target)) {
+      profileWrap.classList.remove('active');
+    }
+  });
+
+  // Handle escape key
+  document.addEventListener('keydown', (e) => {
+    if (e.key === 'Escape') {
+      profileWrap.classList.remove('active');
+    }
+  });
+}

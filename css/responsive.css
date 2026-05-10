@@ -87,7 +87,7 @@ img {
   .page-hero h1         { font-size: clamp(1.75rem, 4vw, 3rem); }
 
   /* ----- NAVBAR — HAMBURGER MENU ----- */
-  .navbar .logo         { font-size: 1.2rem; letter-spacing: 0.5px; }
+  .navbar .logo, .footer-logo { font-size: 1.2rem; letter-spacing: 0.5px; }
   .hamburger {
     display: flex;
     flex-direction: column;
@@ -410,7 +410,7 @@ img {
 
   /* ----- NAVBAR ----- */
   .navbar               { padding: 0.75rem 0; }
-  .navbar .logo         { font-size: 1rem; letter-spacing: 0.2px; flex-shrink: 1; min-width: 0; white-space: nowrap; }
+  .navbar .logo, .footer-logo { font-size: 1rem; letter-spacing: 0.2px; flex-shrink: 1; min-width: 0; white-space: nowrap; }
   .navbar .container    { gap: 0.25rem; justify-content: space-between; padding: 0 1rem; }
 
   /* ----- TYPOGRAPHY ----- */
@@ -497,7 +497,7 @@ img {
     gap: 0.5rem;
   }
   .footer-glass         { padding: 60px 0 40px; }
-  .footer-logo          { font-size: 1.75rem !important; }
+  /* footer-logo sizing is now synced with navbar logo */
   .footer-description   { font-size: 0.9rem; }
   .footer-bottom-links  { flex-direction: column; gap: 0.5rem; align-items: center; }
   .social-icon          { width: 42px; height: 42px; }
@@ -552,7 +552,7 @@ img {
   .room-card-footer .btn { flex: 1; text-align: center; justify-content: center; font-size: 0.65rem; padding: 0.5rem 0.75rem; }
   .nav-menu             { width: 100vw; padding-top: 90px; }
   .nav-menu a           { font-size: 0.95rem; padding: 0.5rem 0; }
-  .navbar .logo         { font-size: 0.85rem; letter-spacing: 0; }
+  .navbar .logo, .footer-logo { font-size: 0.85rem; letter-spacing: 0; }
   .hamburger span       { width: 20px; height: 1.5px; }
   .stats-grid           { grid-template-columns: repeat(2, 1fr); }
   .gallery-grid,

@@ -209,29 +209,29 @@ function showBookingConfirmation(data) {
     <div class="booking-modal-overlay"></div>
     <div class="booking-modal-content animate-scale-in">
       <div class="booking-modal-icon">✓</div>
-      <h2 style="font-family: var(--font-heading); color: var(--navy); margin-bottom: 0.5rem; font-size: 2rem;">Booking Confirmed</h2>
-      <p style="color: var(--text-muted); margin-bottom: 2rem;">Thank you, ${data['full-name'] || 'Guest'}. Your luxury escape awaits.</p>
+      <h2 style="font-family: var(--font-heading); color: var(--gold); margin-bottom: 0.5rem; font-size: 2rem;">Booking Confirmed</h2>
+      <p style="color: rgba(255,255,255,0.7); margin-bottom: 2rem;">Thank you, ${data['full-name'] || 'Guest'}. Your luxury escape awaits.</p>
       
-      <div style="background: var(--beige); padding: 1.5rem; border-radius: var(--radius-sm); margin-bottom: 2rem; text-align: left;">
-        <div style="display: flex; justify-content: space-between; margin-bottom: 0.5rem; border-bottom: 1px solid rgba(0,0,0,0.05); padding-bottom: 0.5rem;">
-          <span style="color: var(--text-muted);">Room</span>
-          <span style="font-weight: 600; color: var(--navy);">${roomName}</span>
+      <div style="background: rgba(255,255,255,0.05); padding: 1.5rem; border-radius: 12px; margin-bottom: 2rem; text-align: left; border: 1px solid rgba(255,255,255,0.1);">
+        <div style="display: flex; justify-content: space-between; margin-bottom: 0.5rem; border-bottom: 1px solid rgba(255,255,255,0.05); padding-bottom: 0.5rem;">
+          <span style="color: rgba(255,255,255,0.6);">Room</span>
+          <span style="font-weight: 600; color: var(--white);">${roomName}</span>
         </div>
-        <div style="display: flex; justify-content: space-between; margin-bottom: 0.5rem; border-bottom: 1px solid rgba(0,0,0,0.05); padding-bottom: 0.5rem;">
-          <span style="color: var(--text-muted);">Check-in</span>
-          <span style="font-weight: 600; color: var(--navy);">${data['check-in']}</span>
+        <div style="display: flex; justify-content: space-between; margin-bottom: 0.5rem; border-bottom: 1px solid rgba(255,255,255,0.05); padding-bottom: 0.5rem;">
+          <span style="color: rgba(255,255,255,0.6);">Check-in</span>
+          <span style="font-weight: 600; color: var(--white);">${data['check-in']}</span>
         </div>
-        <div style="display: flex; justify-content: space-between; margin-bottom: 0.5rem; border-bottom: 1px solid rgba(0,0,0,0.05); padding-bottom: 0.5rem;">
-          <span style="color: var(--text-muted);">Check-out</span>
-          <span style="font-weight: 600; color: var(--navy);">${data['check-out']}</span>
+        <div style="display: flex; justify-content: space-between; margin-bottom: 0.5rem; border-bottom: 1px solid rgba(255,255,255,0.05); padding-bottom: 0.5rem;">
+          <span style="color: rgba(255,255,255,0.6);">Check-out</span>
+          <span style="font-weight: 600; color: var(--white);">${data['check-out']}</span>
         </div>
         <div style="display: flex; justify-content: space-between;">
-          <span style="color: var(--text-muted);">Total</span>
+          <span style="color: rgba(255,255,255,0.6);">Total</span>
           <span style="font-weight: 600; color: var(--gold); font-size: 1.25rem;">${total}</span>
         </div>
       </div>
       
-      <p style="font-size: 0.85rem; color: var(--text-muted); margin-bottom: 2rem; font-style: italic;">
+      <p style="font-size: 0.85rem; color: rgba(255,255,255,0.5); margin-bottom: 2rem; font-style: italic;">
         A detailed itinerary has been sent to ${data['email'] || 'your email'}.
       </p>
       
@@ -243,9 +243,9 @@ function showBookingConfirmation(data) {
   const style = document.createElement('style');
   style.textContent = `
     .booking-modal { position: fixed; inset: 0; z-index: 9999; display: flex; align-items: center; justify-content: center; padding: 20px; }
-    .booking-modal-overlay { position: absolute; inset: 0; background: rgba(11,29,38,0.8); backdrop-filter: blur(8px); }
-    .booking-modal-content { position: relative; background: var(--white); padding: 3rem; border-radius: var(--radius-lg); text-align: center; max-width: 500px; width: 100%; box-shadow: var(--shadow-premium); }
-    .booking-modal-icon { width: 80px; height: 80px; border-radius: 50%; background: var(--gold); color: var(--white); font-size: 2.5rem; display: flex; align-items: center; justify-content: center; margin: 0 auto 1.5rem; box-shadow: 0 10px 20px rgba(212, 175, 55, 0.3); }
+    .booking-modal-overlay { position: absolute; inset: 0; background: rgba(5,11,18,0.85); backdrop-filter: blur(8px); }
+    .booking-modal-content { position: relative; background: #050b12; padding: 3rem; border-radius: 24px; text-align: center; max-width: 500px; width: 100%; box-shadow: 0 20px 60px rgba(0,0,0,0.6); border: 1px solid rgba(212,175,55,0.3); }
+    .booking-modal-icon { width: 80px; height: 80px; border-radius: 50%; background: var(--gold); color: #050b12; font-size: 2.5rem; display: flex; align-items: center; justify-content: center; margin: 0 auto 1.5rem; box-shadow: 0 10px 20px rgba(212, 175, 55, 0.3); }
   `;
   document.head.appendChild(style);
   document.body.appendChild(modal);

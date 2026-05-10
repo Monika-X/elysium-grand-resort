@@ -8,6 +8,7 @@
   <link rel="stylesheet" href="../css/style.css">
   <link rel="stylesheet" href="../css/animations.css">
   <link rel="stylesheet" href="../css/responsive.css">
+  <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.5.1/css/all.min.css">
   <style>
     /* Specific overrides for floating labels */
     .auth-form input::placeholder {
@@ -27,7 +28,7 @@
     </div>
   </div>
 
-  <!-- Navbar Component -->
+  <!-- Navbar -->
   <nav class="navbar" id="main-navbar">
     <div class="container">
       <a href="../index.html" class="logo">Elysium <span>Grand</span></a>
@@ -39,7 +40,39 @@
         <li><a href="booking.html">Booking</a></li>
         <li><a href="gallery.html">Gallery</a></li>
         <li><a href="contact.html">Contact</a></li>
-        <li class="nav-login-item"><a href="login.html" class="nav-login-btn">Login</a></li>
+        <li class="nav-profile-item">
+          <div class="nav-profile-wrap">
+            <div class="nav-profile-icon">
+              <svg class="profile-svg-icon" viewBox="0 0 36 36" fill="currentColor" xmlns="http://www.w3.org/2000/svg" aria-label="Profile" role="img">
+                <circle cx="18" cy="13" r="6.5"/>
+                <path d="M4 34c0-7.732 6.268-14 14-14s14 6.268 14 14" opacity="0.82"/>
+              </svg>
+            </div>
+            <div class="profile-dropdown">
+              <div class="dropdown-header">
+                <p class="user-name">Premium Guest</p>
+                <p class="user-email">guest@elysium.com</p>
+              </div>
+              <a href="dashboard.html" class="dropdown-item">
+                <svg width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><rect x="3" y="3" width="18" height="18" rx="2" ry="2"/><line x1="3" y1="9" x2="21" y2="9"/><line x1="9" y1="21" x2="9" y2="9"/></svg>
+                Dashboard
+              </a>
+              <a href="my-bookings.html" class="dropdown-item">
+                <svg width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M6 2 3 6v14a2 2 0 0 0 2 2h14a2 2 0 0 0 2-2V6l-3-4Z"/><line x1="3" y1="6" x2="21" y2="6"/><path d="M16 10a4 4 0 0 1-8 0"/></svg>
+                My Bookings
+              </a>
+              <a href="settings.html" class="dropdown-item">
+                <svg width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M12.22 2h-.44a2 2 0 0 0-2 2v.18a2 2 0 0 1-1 1.73l-.43.25a2 2 0 0 1-2 0l-.15-.08a2 2 0 0 0-2.73.73l-.22.38a2 2 0 0 0 .73 2.73l.15.1a2 2 0 0 1 1 1.72v.51a2 2 0 0 1-1 1.74l-.15.09a2 2 0 0 0-.73 2.73l.22.38a2 2 0 0 0 2.73.73l.15-.08a2 2 0 0 1 2 0l.43.25a2 2 0 0 1 1 1.73V20a2 2 0 0 0 2 2h.44a2 2 0 0 0 2-2v-.18a2 2 0 0 1 1-1.73l.43-.25a2 2 0 0 1 2 0l.15.08a2 2 0 0 0 2.73-.73l.22-.39a2 2 0 0 0-.73-2.73l-.15-.08a2 2 0 0 1-1-1.74v-.5a2 2 0 0 1 1-1.74l.15-.09a2 2 0 0 0 .73-2.73l-.22-.38a2 2 0 0 0-2.73-.73l-.15.08a2 2 0 0 1-2 0l-.43-.25a2 2 0 0 1-1-1.73V4a2 2 0 0 0-2-2z"/><circle cx="12" cy="12" r="3"/></svg>
+                Settings
+              </a>
+              <div class="dropdown-divider"></div>
+              <a href="login.html" class="dropdown-item logout">
+                <svg width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M9 21H5a2 2 0 0 1-2-2V5a2 2 0 0 1 2-2h4"/><polyline points="16 17 21 12 16 7"/><line x1="21" y1="12" x2="9" y2="12"/></svg>
+                Logout
+              </a>
+            </div>
+          </div>
+        </li>
       </ul>
       <button class="hamburger" id="hamburger" aria-label="Toggle menu">
         <span></span><span></span><span></span>
@@ -147,7 +180,7 @@
               <span>Or join with</span>
             </div>
             <div class="social-btns-grid">
-              <button type="button" class="social-btn google">
+              <button type="button" class="social-btn google" onclick="window.location.href='../index.html'">
                 <svg width="18" height="18" viewBox="0 0 24 24">
                   <path d="M22.56 12.25c0-.78-.07-1.53-.2-2.25H12v4.26h5.92c-.26 1.37-1.04 2.53-2.21 3.31v2.77h3.57c2.08-1.92 3.28-4.74 3.28-8.09z" fill="#4285F4"/>
                   <path d="M12 23c2.97 0 5.46-.98 7.28-2.66l-3.57-2.77c-.98.66-2.23 1.06-3.71 1.06-2.86 0-5.29-1.93-6.16-4.53H2.18v2.84C3.99 20.53 7.7 23 12 23z" fill="#34A853"/>
@@ -156,7 +189,7 @@
                 </svg>
                 Google
               </button>
-              <button type="button" class="social-btn facebook">
+              <button type="button" class="social-btn facebook" onclick="window.location.href='../index.html'">
                 <svg width="18" height="18" viewBox="0 0 24 24" fill="#4267B2">
                   <path d="M24 12.073c0-6.627-5.373-12-12-12s-12 5.373-12 12c0 5.99 4.388 10.954 10.125 11.854v-8.385H7.078v-3.47h3.047V9.43c0-3.007 1.792-4.669 4.533-4.669 1.312 0 2.686.235 2.686.235v2.953H15.83c-1.491 0-1.956.925-1.956 1.874v2.25h3.328l-.532 3.47h-2.796v8.385C19.612 23.027 24 18.062 24 12.073z"/>
                 </svg>
@@ -185,56 +218,46 @@
     <p>Welcome to the Elysium Grand Collective. Redirecting to login...</p>
   </div>
 
-  <!-- Global Luxury Footer -->
+  <!-- Footer -->
   <footer class="footer">
-    <div class="footer-glass">
-      <div class="container">
-        <div class="footer-top">
-          <div class="footer-brand">
-            <a href="../index.html" class="footer-logo-link">
-              <h2 class="footer-logo">Elysium <span>Grand</span></h2>
-            </a>
-            <p class="footer-description">
-              “Experience unparalleled luxury at Elysium Grand Resort. Where timeless elegance meets modern comfort on the pristine shores of paradise.”
-            </p>
-            <div class="footer-social-section">
-              <div class="footer-social">
-                <a href="#" class="social-icon" aria-label="Instagram"><svg width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.5"><rect x="2" y="2" width="20" height="20" rx="5"/><path d="M16 11.37A4 4 0 1 1 12.63 8 4 4 0 0 1 16 11.37z"/><line x1="17.5" y1="6.5" x2="17.51" y2="6.5"/></svg></a>
-                <a href="#" class="social-icon" aria-label="Facebook"><svg width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.5"><path d="M18 2h-3a5 5 0 0 0-5 5v3H7v4h3v8h4v-8h3l1-4h-4V7a1 1 0 0 1 1-1h3z"/></svg></a>
-              </div>
-            </div>
-          </div>
-          <div class="footer-nav">
-            <h4 class="footer-heading">Resort Links</h4>
-            <ul class="footer-list">
-              <li><a href="../index.html" class="footer-link">Home</a></li>
-              <li><a href="about.html" class="footer-link">About</a></li>
-              <li><a href="rooms.html" class="footer-link">Rooms</a></li>
-              <li><a href="booking.html" class="footer-link">Booking</a></li>
-              <li><a href="gallery.html" class="footer-link">Gallery</a></li>
-            </ul>
-          </div>
-          <div class="footer-contact">
-            <h4 class="footer-heading">Contact</h4>
-            <div class="footer-contact-info">
-              <p>Ocean Breeze Avenue,<br>Maldives Luxury Coast</p>
-              <p>reservations@elysiumgrand.com</p>
-              <p>+91 98765 43210</p>
-            </div>
+    <div class="footer-container">
+      <div class="footer-grid">
+        <div class="scroll-animate">
+          <a href="../index.html" class="footer-logo">Elysium <span>Grand</span></a>
+          <p class="footer-desc">Experience unparalleled luxury at Elysium Grand Resort. Where timeless elegance meets modern comfort on the pristine shores of paradise. Discover your ultimate getaway.</p>
+          <div class="footer-social">
+            <a href="https://www.instagram.com/" target="_blank" rel="noopener" aria-label="Instagram"><i class="fab fa-instagram"></i></a>
+            <a href="https://www.facebook.com/" target="_blank" rel="noopener" aria-label="Facebook"><i class="fab fa-facebook-f"></i></a>
+            <a href="https://wa.me/919876543210" target="_blank" rel="noopener" aria-label="WhatsApp"><i class="fab fa-whatsapp"></i></a>
+            <a href="https://www.youtube.com/" target="_blank" rel="noopener" aria-label="YouTube"><i class="fab fa-youtube"></i></a>
           </div>
         </div>
-        <div class="footer-bottom">
-          <div class="footer-divider-luxury"></div>
-          <div class="footer-bottom-wrap">
-            <div class="copyright-left">
-              <p>&copy; <span id="current-year"></span> Elysium Grand Resort. All Rights Reserved.</p>
-            </div>
-            <div class="footer-bottom-links">
-              <a href="privacy-policy.html">Privacy</a>
-              <a href="terms-conditions.html">Terms</a>
-              <a href="contact.html#faq">FAQ</a>
-            </div>
-          </div>
+        <div class="scroll-animate delay-2">
+          <h3 class="footer-title">Quick Links</h3>
+          <ul class="footer-links">
+            <li><a href="../index.html">Home</a></li>
+            <li><a href="about.html">About</a></li>
+            <li><a href="rooms.html">Rooms</a></li>
+            <li><a href="booking.html">Booking</a></li>
+            <li><a href="gallery.html">Gallery</a></li>
+            <li><a href="contact.html">Contact</a></li>
+          </ul>
+        </div>
+        <div class="footer-contact scroll-animate delay-4">
+          <h3 class="footer-title">Contact</h3>
+          <a href="https://maps.google.com/?q=Maldives+Luxury+Coast" target="_blank" rel="noopener" class="contact-item"><i class="fas fa-map-marker-alt"></i><span>Elysium Grand Resort<br>Ocean Breeze Avenue,<br>Maldives Luxury Coast</span></a>
+          <a href="mailto:info@elysiumgrand.com" class="contact-item"><i class="fas fa-envelope"></i><span>info@elysiumgrand.com</span></a>
+          <a href="tel:+919876543210" class="contact-item"><i class="fas fa-phone-alt"></i><span>+91 98765 43210</span></a>
+          <div class="contact-item availability"><i class="fas fa-headset"></i><span>Available 24/7 for reservations</span></div>
+        </div>
+      </div>
+      <div class="footer-bottom">
+        <p>© <span id="current-year">2026</span> Elysium Grand Resort. All Rights Reserved.</p>
+        <div class="footer-bottom-links">
+          <a href="privacy-policy.html">Privacy Policy</a>
+          <a href="terms-conditions.html">Terms &amp; Conditions</a>
+          <a href="contact.html#faq">FAQ</a>
+          <a href="sitemap.html">Sitemap</a>
         </div>
       </div>
     </div>
